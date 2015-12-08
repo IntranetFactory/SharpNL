@@ -384,14 +384,14 @@ namespace ToolsExample
         {
             if (mNameFinder == null)
             {
-                TokenNameFinderModel nameFinderModel = new TokenNameFinderModel();
-                nameFinderModel.
-                NameFinderME nameFinder = new NameFinderME(nameFinderModel);
+                //TokenNameFinderModel nameFinderModel = new TokenNameFinderModel();
+                //nameFinderModel.
+                //NameFinderME nameFinder = new NameFinderME(nameFinderModel);
                 //mNameFinder = new OpenNLP.Tools.NameFind.EnglishNameFinder(mModelPath + "namefind\\");
             }
 
             string[] models = new string[] { "date", "location", "money", "organization", "percentage", "person", "time" };
-            
+
             //return mNameFinder.GetNames(models, sentence);
             return string.Empty;
         }
