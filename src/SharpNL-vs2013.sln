@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL", "SharpNL\SharpNL.csproj", "{0FB2DE8A-7754-425B-8B8F-2EAD2DFD8192}"
 EndProject
@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EA53DA
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL.DemoWinForm", "SharpNL.DemoWinForm\SharpNL.DemoWinForm.csproj", "{D1C528C1-96DB-43D5-AE13-1BF4541342B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{36851EC8-C240-4C34-83C9-1B4C29C71CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36851EC8-C240-4C34-83C9-1B4C29C71CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36851EC8-C240-4C34-83C9-1B4C29C71CA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

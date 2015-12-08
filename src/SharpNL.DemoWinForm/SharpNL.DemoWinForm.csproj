@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1C528C1-96DB-43D5-AE13-1BF4541342B2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpNL.DemoWinForm</RootNamespace>
+    <AssemblyName>SharpNL.DemoWinForm</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DemoWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoWinForm.Designer.cs">
+      <DependentUpon>DemoWinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lithium\Collections\ConnectionCollection.cs" />
+    <Compile Include="Lithium\Collections\ConnectorCollection.cs" />
+    <Compile Include="Lithium\Collections\ShapeCollection.cs" />
+    <Compile Include="Lithium\Connection.cs" />
+    <Compile Include="Lithium\Connector.cs" />
+    <Compile Include="Lithium\Delegates\Delegates.cs" />
+    <Compile Include="Lithium\Entity.cs" />
+    <Compile Include="Lithium\Enums\Enums.cs" />
+    <Compile Include="Lithium\GraphAbstract.cs" />
+    <Compile Include="Lithium\Interfaces\Interfaces.cs" />
+    <Compile Include="Lithium\IO\DataType.cs" />
+    <Compile Include="Lithium\IO\EdgeType.cs" />
+    <Compile Include="Lithium\IO\GraphDataAttribute.cs" />
+    <Compile Include="Lithium\IO\GraphDataCollection.cs" />
+    <Compile Include="Lithium\IO\GraphSerializer.cs" />
+    <Compile Include="Lithium\IO\GraphType.cs" />
+    <Compile Include="Lithium\IO\NodeType.cs" />
+    <Compile Include="Lithium\IO\ParentChild.cs" />
+    <Compile Include="Lithium\IO\ParentChildCollection.cs" />
+    <Compile Include="Lithium\Proxy.cs" />
+    <Compile Include="Lithium\ShapeBase.cs" />
+    <Compile Include="Lithium\Shapes\OvalShape.cs" />
+    <Compile Include="Lithium\Shapes\SimpleRectangle.cs" />
+    <Compile Include="Lithium\Shapes\TextLabel.cs" />
+    <Compile Include="Lithium\UI\LithiumControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lithium\Visitors\DeleteVisitor.cs" />
+    <Compile Include="Lithium\Visitors\ExpanderVisitor.cs" />
+    <Compile Include="ParseTree\ParseTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolsExample\ToolsExampleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="DemoWinForm.resx">
+      <DependentUpon>DemoWinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lithium\UI\LithiumControl.resx">
+      <DependentUpon>LithiumControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParseTree\ParseTreeForm.resx">
+      <DependentUpon>ParseTreeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ToolsExample\ToolsExampleForm.resx">
+      <DependentUpon>ToolsExampleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="models-1.5\en-chunker.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-date.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-location.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-money.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-organization.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-percentage.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-person.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-ner-time.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-parser-chunking.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-pos-maxent.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-sent.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="models-1.5\en-token.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpNL\SharpNL.csproj">
+      <Project>{0fb2de8a-7754-425b-8b8f-2ead2dfd8192}</Project>
+      <Name>SharpNL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lithium\doc.xml" />
+    <Content Include="Lithium\LithiumControl.bmp" />
+    <Content Include="ParseTree\App.ico" />
+    <Content Include="ToolsExample\App.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

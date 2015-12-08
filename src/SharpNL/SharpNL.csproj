@@ -58,6 +58,7 @@
     <Compile Include="Classifier\IClass.cs" />
     <Compile Include="Classifier\IClassClassifierResult.cs" />
     <Compile Include="Classifier\StringClass.cs" />
+    <Compile Include="CSharp\CovariantIListAdapter.cs" />
     <Compile Include="DocumentCategorizer\DocumentCategorizerNB.cs" />
     <Compile Include="Globalization\Culture.cs" />
     <Compile Include="Globalization\Cultures\en.cs" />
