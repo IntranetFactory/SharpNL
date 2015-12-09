@@ -14,6 +14,9 @@ using SharpNL.Tokenize;
 using SharpNL.POSTag;
 using SharpNL.Parser;
 using SharpNL.NameFind;
+using SharpNL.DemoWinForm.ToolsExample;
+using SharpNL.Analyzer;
+using SharpNL;
 
 namespace ToolsExample
 {
@@ -44,7 +47,7 @@ namespace ToolsExample
         //private OpenNLP.Tools.Chunker.EnglishTreebankChunker mChunker;
         private SharpNL.Parser.IParser mParser;
         //private OpenNLP.Tools.Parser.EnglishTreebankParser mParser;
-        private NameFinderME mNameFinder;
+        private AggregateNameFinderME mNameFinder;
         //private OpenNLP.Tools.NameFind.EnglishNameFinder mNameFinder;
 
         public ToolsExampleForm()
@@ -384,16 +387,12 @@ namespace ToolsExample
         {
             if (mNameFinder == null)
             {
-                //TokenNameFinderModel nameFinderModel = new TokenNameFinderModel();
-                //nameFinderModel.
-                //NameFinderME nameFinder = new NameFinderME(nameFinderModel);
-                //mNameFinder = new OpenNLP.Tools.NameFind.EnglishNameFinder(mModelPath + "namefind\\");
+                AggregateNameFinderME nameFinderMe = new AggregateNameFinderME(mModelPath);
+                mNameFinder = nameFinderMe;
             }
-
             string[] models = new string[] { "date", "location", "money", "organization", "percentage", "person", "time" };
-
-            //return mNameFinder.GetNames(models, sentence);
-            return string.Empty;
+            return mNameFinder.GetNames(models, sentence);
+            //return String.Empty.ToString();
         }
 
         private Parse DoParse(string line)
