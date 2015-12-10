@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EA53DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL.DemoWinForm", "SharpNL.DemoWinForm\SharpNL.DemoWinForm.csproj", "{D1C528C1-96DB-43D5-AE13-1BF4541342B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL.IntentDemo", "SharpNL.IntentDemo\SharpNL.IntentDemo.csproj", "{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1C528C1-96DB-43D5-AE13-1BF4541342B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

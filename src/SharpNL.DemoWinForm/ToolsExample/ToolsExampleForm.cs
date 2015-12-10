@@ -142,14 +142,14 @@ namespace ToolsExample
             // 
             // txtOut
             // 
-            this.txtOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOut.Location = new System.Drawing.Point(8, 136);
             this.txtOut.Multiline = true;
             this.txtOut.Name = "txtOut";
             this.txtOut.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtOut.Size = new System.Drawing.Size(523, 400);
+            this.txtOut.Size = new System.Drawing.Size(518, 400);
             this.txtOut.TabIndex = 15;
             this.txtOut.WordWrap = false;
             // 
@@ -164,19 +164,19 @@ namespace ToolsExample
             // 
             // txtIn
             // 
-            this.txtIn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtIn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtIn.Location = new System.Drawing.Point(8, 8);
             this.txtIn.Multiline = true;
             this.txtIn.Name = "txtIn";
-            this.txtIn.Size = new System.Drawing.Size(523, 88);
+            this.txtIn.Size = new System.Drawing.Size(518, 88);
             this.txtIn.TabIndex = 13;
             this.txtIn.Text = resources.GetString("txtIn.Text");
             // 
-            // MainForm
+            // ToolsExampleForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(539, 542);
+            this.ClientSize = new System.Drawing.Size(534, 542);
             this.Controls.Add(this.btnParse);
             this.Controls.Add(this.btnPOSTag);
             this.Controls.Add(this.btnChunk);
@@ -185,7 +185,7 @@ namespace ToolsExample
             this.Controls.Add(this.txtOut);
             this.Controls.Add(this.btnSplit);
             this.Controls.Add(this.txtIn);
-            this.Name = "MainForm";
+            this.Name = "ToolsExampleForm";
             this.Text = "OpenNLP Tools Example";
             this.ResumeLayout(false);
             this.PerformLayout();
