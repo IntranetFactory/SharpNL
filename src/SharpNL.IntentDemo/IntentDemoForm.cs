@@ -33,6 +33,7 @@ namespace SharpNL.IntentDemo
 
         private void btnLearn_Click(object sender, EventArgs e)
         {
+            btnParse.Enabled = false;
             string[] fileNames = new string[] { "current.txt", "five.txt", "hourly.txt" };
 
             List<IObjectStream<DocumentSample>> trainingSamples = new List<IObjectStream<DocumentSample>>();
