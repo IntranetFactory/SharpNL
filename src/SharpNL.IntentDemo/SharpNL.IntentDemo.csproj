@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombinedObjectStream.cs" />
     <Compile Include="IntentDemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IntentDemoForm.Designer.cs">
       <DependentUpon>IntentDemoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IntentDocumentSampleStream.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="IntentDemoForm.resx">
@@ -77,11 +79,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Intents\current.txt" />
-    <Content Include="Intents\five.txt" />
-    <Content Include="Intents\hourly.txt" />
+    <ProjectReference Include="..\SharpNL\SharpNL.csproj">
+      <Project>{0fb2de8a-7754-425b-8b8f-2ead2dfd8192}</Project>
+      <Name>SharpNL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Intents\current.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Intents\five.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Intents\hourly.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

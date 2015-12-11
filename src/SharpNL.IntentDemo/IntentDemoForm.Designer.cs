@@ -41,6 +41,7 @@
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(576, 62);
             this.txtInput.TabIndex = 0;
+            this.txtInput.Text = "how is Denver today";
             // 
             // txtResults
             // 
