@@ -22,6 +22,7 @@ namespace SharpNL.IntentDemo
 
         private DocumentCategorizerME _documentCategorizer;
         private NameFinderME[] _nameFinderMEs;
+        private string[] fileNames;
 
         public IntentDemoForm()
         {
@@ -33,8 +34,9 @@ namespace SharpNL.IntentDemo
 
         private void btnLearn_Click(object sender, EventArgs e)
         {
+            txtResults.Text = "";
             btnParse.Enabled = false;
-            string[] fileNames = new string[] { "current.txt", "five.txt", "hourly.txt" };
+            fileNames = new string[] { "current.txt", "five.txt", "hourly.txt" };
 
             List<IObjectStream<DocumentSample>> trainingSamples = new List<IObjectStream<DocumentSample>>();
             foreach (string fileName in fileNames)
@@ -85,12 +87,33 @@ namespace SharpNL.IntentDemo
 
         private void btnParse_Click(object sender, EventArgs e)
         {
+            txtResults.Text = "";
+
             String text = txtInput.Text;
             StringBuilder result = new StringBuilder();
 
             double[] outcome = _documentCategorizer.Categorize(text);
+
+            // how to detect no matching intents?
+            double avg = 1d / outcome.Length;
+            bool nomatch = true;
+
+            for (int i = 0; i < outcome.Length; i++)
+            {
+                if (outcome[i] != avg) nomatch = false;  // at least one outcome must differ from avg
+                result.AppendFormat("{0}. {1}: \t{2}\r\n", i, fileNames[i], outcome[i]);
+            }
+
+            if (nomatch)
+            {
+                result.Append("no matching intent found");
+                txtResults.Text = result.ToString();
+                return;
+            }
+
+            result.Append("\r\nintent: ");
             result.Append(_documentCategorizer.GetBestCategory(outcome));
-            result.Append(" ");
+            result.Append("\r\n");
 
             String[] tokens = WhitespaceTokenizer.Instance.Tokenize(text);
             foreach (NameFinderME nameFinder in _nameFinderMEs)
