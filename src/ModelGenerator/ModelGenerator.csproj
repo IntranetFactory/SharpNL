@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>16050b88-fc50-467b-901b-2868b46badaf</ProjectGuid>
+    <ProjectGuid>{5D235384-64F4-492F-A24D-6B3B6601BA97}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ModelGenerator</RootNamespace>
@@ -46,7 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="model\input\entities\employee.csv" />
+    <None Include="model\input\entities\location.csv" />
+    <None Include="model\input\intents\manager.csv" />
+    <None Include="model\input\intents\pto.csv" />
+    <None Include="model\output\readme.md" />
+    <None Include="model\output_sample\entities\employee.json" />
+    <None Include="model\output_sample\entities\location.json" />
+    <None Include="model\output_sample\intents\manager.json" />
+    <None Include="model\output_sample\intents\pto.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

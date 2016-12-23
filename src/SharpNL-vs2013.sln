@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL", "SharpNL\SharpNL.csproj", "{0FB2DE8A-7754-425B-8B8F-2EAD2DFD8192}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL.DemoWinForm", "SharpNL.DemoWinForm\SharpNL.DemoWinForm.csproj", "{D1C528C1-96DB-43D5-AE13-1BF4541342B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNL.IntentDemo", "SharpNL.IntentDemo\SharpNL.IntentDemo.csproj", "{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelGenerator", "ModelGenerator\ModelGenerator.csproj", "{5D235384-64F4-492F-A24D-6B3B6601BA97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A32DBE42-24E0-4BE7-A92B-FF92FC07CE15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D235384-64F4-492F-A24D-6B3B6601BA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D235384-64F4-492F-A24D-6B3B6601BA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D235384-64F4-492F-A24D-6B3B6601BA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D235384-64F4-492F-A24D-6B3B6601BA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
