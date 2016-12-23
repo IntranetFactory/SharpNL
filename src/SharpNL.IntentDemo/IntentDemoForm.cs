@@ -20,7 +20,7 @@ namespace SharpNL.IntentDemo
         private bool isTrained;
         private string mIntentModelPath;
 
-        private DocumentCategorizerME _documentCategorizer;
+        private DocumentCategorizerNB _documentCategorizer;
         private NameFinderME[] _nameFinderMEs;
         private string[] fileNames;
 
@@ -49,7 +49,7 @@ namespace SharpNL.IntentDemo
             }
 
             IObjectStream<DocumentSample> combinedDocumentSampleStream = new CombinedObjectStream<DocumentSample>(trainingSamples);
-            DocumentCategorizerModel doccatModel = DocumentCategorizerME.Train("en", combinedDocumentSampleStream, new TrainingParameters(), new DocumentCategorizerFactory());
+            DocumentCategorizerModel doccatModel = DocumentCategorizerME.Train("en", combinedDocumentSampleStream, TrainingParameters.DefaultParameters(), new DocumentCategorizerFactory());
             combinedDocumentSampleStream.Dispose();
 
 
@@ -70,7 +70,7 @@ namespace SharpNL.IntentDemo
 
             tokenNameFinderModels.Add(tokenNameFinderModel);
 
-            DocumentCategorizerME categorizer = new DocumentCategorizerME(doccatModel);
+            var categorizer = new DocumentCategorizerNB(doccatModel);
             _documentCategorizer = categorizer;
 
             NameFinderME[] nameFinderMEs = new NameFinderME[tokenNameFinderModels.Count];
@@ -101,8 +101,10 @@ namespace SharpNL.IntentDemo
             for (int i = 0; i < outcome.Length; i++)
             {
                 if (outcome[i] != avg) nomatch = false;  // at least one outcome must differ from avg
-                result.AppendFormat("{0}. {1}: \t{2}\r\n", i, fileNames[i], outcome[i]);
+                result.AppendFormat("{0}. {1}: \t{2}\r\n", i, fileNames[i], outcome[i]);                
             }
+
+            result.AppendLine("best category: " + _documentCategorizer.GetBestCategory(outcome));
 
             if (nomatch)
             {
