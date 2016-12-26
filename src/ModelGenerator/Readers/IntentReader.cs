@@ -13,16 +13,29 @@ namespace ModelGenerator.Readers
         {
             var currentFolder = Directory.GetCurrentDirectory();
 
-            var entitiesAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
+            var intentsAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
 
-            DirectoryInfo directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
+            Console.WriteLine(string.Format("Reading intent definition files from {0}", intentsAbsolutePath));
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(intentsAbsolutePath);
             var fileInfos = directoryInfo.EnumerateFiles();
             var fileCount = fileInfos.Count();
 
             List<Intent> result = new List<Intent>(fileCount);
 
+            if (fileCount > 0)
+            {
+                System.Console.WriteLine("Found {0} files that contain intent definitions", fileCount);
+            }
+            else
+            {
+                System.Console.WriteLine("Folder {0} is empty", intentsAbsolutePath);
+            }
+
             foreach (var fileInfo in fileInfos)
             {
+                System.Console.Write("Processing file {0}", fileInfo.Name);
+                
                 var fileInputStream = fileInfo.OpenRead();
                 byte[] fileBytes = new byte[fileInfo.Length];
 
@@ -39,6 +52,8 @@ namespace ModelGenerator.Readers
                 entity.Text = contents;
 
                 result.Add(entity);
+
+                System.Console.WriteLine("... done");
             }
 
             return result;

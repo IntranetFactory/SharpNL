@@ -17,14 +17,27 @@ namespace ModelGenerator.Writers
 
             var entitiesAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
 
-            var directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
-            if (!directoryInfo.Exists) { directoryInfo.Create(); }
+            System.Console.WriteLine("Writing intents to {0}", entitiesAbsolutePath);
 
+            var directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
+            if (!directoryInfo.Exists)
+            {
+                System.Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
+                directoryInfo.Create();
+                System.Console.WriteLine("done");
+            }
+
+            int count = 1;
+            int total = entities.Count;
             foreach (var entity in entities)
             {
+                System.Console.WriteLine("Processing intent {0} of {1}", count, total);
+
                 var fileName = string.Format("{0}.json", entity.IntentName);
                 var fileAbsolutePath = Path.Combine(entitiesAbsolutePath, fileName);
                 var fileOutputStream = File.CreateText(fileAbsolutePath);
+
+                System.Console.Write("Writing file {0} ... ", fileName);
 
                 var lines = entity.Text.Split(new String[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -109,6 +122,8 @@ namespace ModelGenerator.Writers
 
                 fileOutputStream.Flush();
                 fileOutputStream.Dispose();
+
+                System.Console.WriteLine("done", entitiesAbsolutePath);
             }
         }
     }

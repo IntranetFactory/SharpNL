@@ -15,14 +15,27 @@ namespace ModelGenerator.Readers
 
             var entitiesAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
 
+            Console.WriteLine(string.Format("Reading entity definition files from {0}", entitiesAbsolutePath));
+
             DirectoryInfo directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
             var fileInfos = directoryInfo.EnumerateFiles();
             var fileCount = fileInfos.Count();
 
             List<Entity> result = new List<Entity>(fileCount);
 
+            if (fileCount > 0)
+            {
+                System.Console.WriteLine("Found {0} files that contain entity definitions", fileCount);
+            }
+            else
+            {
+                System.Console.WriteLine("Folder {0} is empty", entitiesAbsolutePath);
+            }
+
             foreach (var fileInfo in fileInfos)
             {
+                System.Console.Write("Processing file {0}", fileInfo.Name);
+
                 var fileInputStream = fileInfo.OpenRead();
                 byte[] fileBytes = new byte[fileInfo.Length];
 
@@ -39,6 +52,8 @@ namespace ModelGenerator.Readers
                 entity.Synonyms = contents.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
                 result.Add(entity);
+
+                System.Console.WriteLine("... done.");
             }
 
             return result;
