@@ -39,7 +39,13 @@ namespace ModelGenerator.Writers
 
                 System.Console.Write("Writing file {0} ... ", fileName);
 
-                var lines = entity.Text.Split(new String[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                var splitterString = Environment.NewLine;
+                if (!entity.Text.Contains("\r\n"))
+                {
+                    splitterString = "\n";
+                }
+
+                var lines = entity.Text.Split(new String[] { splitterString }, StringSplitOptions.RemoveEmptyEntries);
 
                 IntentsOutputObject intentsOutput = new IntentsOutputObject();
                 intentsOutput.Id = entity.Id;
