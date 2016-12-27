@@ -25,26 +25,23 @@ namespace ModelGenerator.Readers
 
             if (fileCount > 0)
             {
-                System.Console.WriteLine("Found {0} files that contain intent definitions", fileCount);
+                Console.WriteLine("Found {0} files that contain intent definitions", fileCount);
             }
             else
             {
-                System.Console.WriteLine("Folder {0} is empty", intentsAbsolutePath);
+                Console.WriteLine("Folder {0} is empty", intentsAbsolutePath);
             }
 
             foreach (var fileInfo in fileInfos)
             {
-                System.Console.Write("Processing file {0}", fileInfo.Name);
+                Console.Write("Processing file {0}", fileInfo.Name);
                 
                 var fileInputStream = fileInfo.OpenRead();
-                byte[] fileBytes = new byte[fileInfo.Length];
+                var streamReader = new StreamReader(fileInputStream);
+                var contents = streamReader.ReadToEnd();
 
-                // WARNING! Casting file length to int limits the file size to 4GB
-                fileInputStream.Read(fileBytes, 0, (int)fileInfo.Length);
-                fileInputStream.Dispose();
-
-                var contents = Encoding.UTF8.GetString(fileBytes);
-                contents = contents.Replace("\"", "");
+                streamReader.Close();
+                fileInputStream.Close();
 
                 Intent entity = new Intent();
                 entity.Id = Guid.NewGuid().ToString();
@@ -53,7 +50,7 @@ namespace ModelGenerator.Readers
 
                 result.Add(entity);
 
-                System.Console.WriteLine("... done");
+                Console.WriteLine("... done");
             }
 
             return result;

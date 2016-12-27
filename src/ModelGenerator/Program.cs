@@ -1,7 +1,10 @@
 ﻿using ModelGenerator.Models;
 using ModelGenerator.Readers;
+using ModelGenerator.Tools;
 using ModelGenerator.Writers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ModelGenerator
 {
@@ -9,36 +12,65 @@ namespace ModelGenerator
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Generating models\n\n");
+            Console.WriteLine("Model generator started \n\n");
+            Console.WriteLine("Processing command line arguments ... \n");
 
-            System.Console.WriteLine("Processing intents\n");
+            bool InlineIds = args.Any(arg => arg == "-ii");
+            bool IgnoreHeaderLine = args.Any(arg => arg == "-hl");
+
+            LogCommandLineParameterToConsole("-ii", "InlineIds", InlineIds);
+            LogCommandLineParameterToConsole("-hl", "IgnoreHeaderLine", IgnoreHeaderLine);
+
+            Console.WriteLine("Done.\n\n");
+
+            Console.WriteLine("Reading entities\n");
+
+            var entitiesRelativePath = System.IO.Path.Combine("model", "input", "entities");
+            IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
+
+            Console.WriteLine("Done. \n");
+
+            Console.WriteLine("Reading intents\n");
 
             var intentsRelativePath = System.IO.Path.Combine("model", "input", "intents");
             IList<Intent> intents = IntentReader.Read(intentsRelativePath);
 
-            System.Console.WriteLine("\n");
+            Console.WriteLine("Done. \n");
+
+            IntentProcessingOptions intentProcessingOptions = new IntentProcessingOptions();
+            intentProcessingOptions.InlineIds = InlineIds;
+            intentProcessingOptions.IgnoreHeaderLine = IgnoreHeaderLine;
 
             var intentOutputFolderRelativePath = System.IO.Path.Combine("model", "output", "intents");
-            IntentWriter.Write(intents, intentOutputFolderRelativePath);
+            IntentLineSplitter intentLineSplitter = new IntentLineSplitter();
+            EntityParser entityParser = new EntityParser();
+            IntentWriter intentWriter = new IntentWriter(intentLineSplitter, entityParser);
+            intentWriter.Write(intents, intentOutputFolderRelativePath, entities, intentProcessingOptions);
 
-            System.Console.WriteLine("Finished processing intents\n\n");
+            Console.WriteLine("Finished processing intents\n\n");
 
-            System.Console.WriteLine("Processing entities\n");
-            
-            var entitiesRelativePath = System.IO.Path.Combine("model", "input", "entities");
-            IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
-
-            System.Console.WriteLine("\n");
 
             var entitiesOutputFolderRelativePath = System.IO.Path.Combine("model", "output", "entities");
             EntityWriter.Write(entities, entitiesOutputFolderRelativePath);
 
-            System.Console.WriteLine("Finished processing entities\n\n");
+            Console.WriteLine("Finished processing entities\n\n");
 
-            System.Console.WriteLine("Models generation completed");
+            Console.WriteLine("Models generation completed");
 
-            System.Console.WriteLine("Press ENTER to exit");
-            System.Console.ReadLine();
+            Console.WriteLine("Finished. Press ENTER to exit");
+            Console.ReadLine();
+        }
+
+        private static void LogCommandLineParameterToConsole(string switchName, string name, bool value)
+        {
+            if (!value)
+            {
+                Console.WriteLine("Switch {0} not present. Parameter {1} set to {2}.", switchName, name, value);
+            }
+            else
+            {
+                Console.WriteLine("Switch {0} present. Parameter {1} set to {2}.", switchName, name, value);
+            }
         }
     }
 }
