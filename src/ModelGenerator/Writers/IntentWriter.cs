@@ -17,40 +17,45 @@ namespace ModelGenerator.Writers
 
             var entitiesAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
 
-            System.Console.WriteLine("Writing intents to {0}", entitiesAbsolutePath);
+            Console.WriteLine("Writing intents to {0}", entitiesAbsolutePath);
 
             var directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
             if (!directoryInfo.Exists)
             {
-                System.Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
+                Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
                 directoryInfo.Create();
-                System.Console.WriteLine("done");
+                Console.WriteLine("done");
             }
 
             int count = 1;
             int total = entities.Count;
             foreach (var entity in entities)
             {
-                System.Console.WriteLine("Processing intent {0} of {1}", count, total);
+                Console.WriteLine("Processing intent {0} of {1}", count, total);
 
                 var fileName = string.Format("{0}.json", entity.IntentName);
                 var fileAbsolutePath = Path.Combine(entitiesAbsolutePath, fileName);
                 var fileOutputStream = File.CreateText(fileAbsolutePath);
 
-                System.Console.Write("Writing file {0} ... ", fileName);
+                Console.Write("Writing file {0} ... ", fileName);
 
-                var splitterString = Environment.NewLine;
-                if (!entity.Text.Contains("\r\n"))
+                MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(entity.Text));
+                StreamReader streamReader = new StreamReader(memoryStream);
+
+                List<string> lines = new List<string>();
+
+                while(!streamReader.EndOfStream)
                 {
-                    splitterString = "\n";
+                    lines.Add(streamReader.ReadLine());
                 }
 
-                var lines = entity.Text.Split(new String[] { splitterString }, StringSplitOptions.RemoveEmptyEntries);
+                streamReader.Dispose();
+                memoryStream.Dispose();
 
                 IntentsOutputObject intentsOutput = new IntentsOutputObject();
                 intentsOutput.Id = entity.Id;
                 intentsOutput.Name = entity.IntentName;
-                intentsOutput.UserSays = new List<UserSay>(lines.Length);
+                intentsOutput.UserSays = new List<UserSay>(lines.Count);
 
                 IntentResponse intentResponse = new IntentResponse();
                 intentsOutput.Responses.Add(intentResponse);
@@ -124,12 +129,13 @@ namespace ModelGenerator.Writers
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
                 });
+                outputString = outputString.Replace("\r", "");
                 fileOutputStream.Write(outputString);
 
                 fileOutputStream.Flush();
                 fileOutputStream.Dispose();
 
-                System.Console.WriteLine("done", entitiesAbsolutePath);
+                Console.WriteLine("done", entitiesAbsolutePath);
             }
         }
     }

@@ -15,26 +15,26 @@ namespace ModelGenerator.Writers
 
             var entitiesAbsolutePath = Path.Combine(currentFolder, folderRelativePath);
 
-            System.Console.WriteLine("Writing entities to {0}", entitiesAbsolutePath);
+            Console.WriteLine("Writing entities to {0}", entitiesAbsolutePath);
 
             var directoryInfo = new DirectoryInfo(entitiesAbsolutePath);
             if (!directoryInfo.Exists) {
-                System.Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
+                Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
                 directoryInfo.Create();
-                System.Console.WriteLine("done");
+                Console.WriteLine("done");
             }
 
             int count = 1;
             int total = entities.Count;
             foreach (var entity in entities)
             {
-                System.Console.WriteLine("Processing entity {0} of {1}", count, total);
+                Console.WriteLine("Processing entity {0} of {1}", count, total);
 
                 var fileName = string.Format("{0}.json", entity.EntityName);
                 var fileAbsolutePath = Path.Combine(entitiesAbsolutePath, fileName);
                 var fileOutputStream = File.CreateText(fileAbsolutePath);
 
-                System.Console.Write("Writing file {0} ... ", fileName);
+                Console.Write("Writing file {0} ... ", fileName);
 
                 EntitiesOutputObject entitiesOutput = new EntitiesOutputObject();
                 entitiesOutput.Id = entity.Id;
@@ -64,13 +64,14 @@ namespace ModelGenerator.Writers
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
                 });
+                outputString = outputString.Replace("\r", "");
                 fileOutputStream.Write(outputString);
 
                 fileOutputStream.Flush();
                 fileOutputStream.Dispose();
                 count += 1;
 
-                System.Console.WriteLine("done", entitiesAbsolutePath);
+                Console.WriteLine("done", entitiesAbsolutePath);
             }
         }
     }
