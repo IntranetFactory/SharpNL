@@ -66,12 +66,6 @@
     <None Include="model\input\entities\location.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="model\input\intents\intents1.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\intents\intents2.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="model\input\intents\manager.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
