@@ -73,6 +73,18 @@
     <None Include="model\input\entities\readme.md" />
     <None Include="model\input\intents\intents1.csv" />
     <None Include="model\input\intents\intents2.csv" />
+    <None Include="model\input\entities\employee.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model\input\entities\location.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model\input\intents\manager.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model\input\intents\pto.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="model\output\readme.md" />
   </ItemGroup>
   <ItemGroup>
