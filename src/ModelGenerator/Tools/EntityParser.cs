@@ -66,7 +66,7 @@ namespace ModelGenerator.Tools
                     }
                     sb.Clear();
                 }
-                else if (Char.IsLetter(current) || Char.IsPunctuation(current))
+                else
                 {
                     sb.Append(current);
                 }

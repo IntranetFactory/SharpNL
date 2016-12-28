@@ -37,6 +37,8 @@ namespace ModelGenerator
 
             Console.WriteLine("Done. \n");
 
+            Console.WriteLine("Writing intents\n");
+
             IntentProcessingOptions intentProcessingOptions = new IntentProcessingOptions();
             intentProcessingOptions.InlineIds = InlineIds;
             intentProcessingOptions.IgnoreHeaderLine = IgnoreHeaderLine;
@@ -49,6 +51,7 @@ namespace ModelGenerator
 
             Console.WriteLine("Finished processing intents\n\n");
 
+            Console.WriteLine("Writing entities\n");
 
             var entitiesOutputFolderRelativePath = System.IO.Path.Combine("model", "output", "entities");
             EntityWriter.Write(entities, entitiesOutputFolderRelativePath);

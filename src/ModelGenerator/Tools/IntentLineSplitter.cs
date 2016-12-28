@@ -5,7 +5,7 @@ namespace ModelGenerator.Tools
 {
     interface IIntentLineSplitter
     {
-        string[] Split(string line);
+        string[] Split(string line, bool ignoreEmpty = false);
     }
 
     class IntentLineSplitter : IIntentLineSplitter
@@ -15,7 +15,7 @@ namespace ModelGenerator.Tools
 
         }
 
-        public string[] Split(string line)
+        public string[] Split(string line, bool ignoreEmpty = false)
         {
             List<string> result = new List<string>();
 
@@ -42,14 +42,14 @@ namespace ModelGenerator.Tools
                 {
                     closeWhenComma = !closeWhenComma; 
                 }
-                
+
                 if (current != ',' || !closeWhenComma)
                 {
                     sb.Append(current);
                 }
                 else if (current == ',' && closeWhenComma)
                 {
-                    if (sb.Length > 0)
+                    if (sb.Length > 0 || !ignoreEmpty)
                     {
                         result.Add(sb.ToString());
                         sb.Clear();

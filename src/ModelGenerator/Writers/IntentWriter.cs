@@ -44,17 +44,17 @@ namespace ModelGenerator.Writers
 
             int count = 1;
             int total = intents.Count;
-            foreach (var entity in intents)
+            foreach (var intent in intents)
             {
                 Console.WriteLine("Processing intent {0} of {1}", count, total);
-
-                var fileName = string.Format("{0}.json", entity.IntentName);
+                count += 1;
+                var fileName = string.Format("{0}.json", intent.IntentName);
                 var fileAbsolutePath = Path.Combine(entitiesAbsolutePath, fileName);
                 var fileOutputStream = File.CreateText(fileAbsolutePath);
 
                 Console.WriteLine("Writing file {0} ... ", fileName);
 
-                MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(entity.Text));
+                MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(intent.Text));
                 StreamReader streamReader = new StreamReader(memoryStream);
 
                 List<string> lines = new List<string>();
@@ -68,8 +68,8 @@ namespace ModelGenerator.Writers
                 memoryStream.Dispose();
 
                 IntentsOutputObject intentsOutput = new IntentsOutputObject();
-                intentsOutput.Id = entity.Id;
-                intentsOutput.Name = entity.IntentName;
+                intentsOutput.Id = intent.Id;
+                intentsOutput.Name = intent.IntentName;
                 intentsOutput.UserSays = new List<UserSay>(lines.Count);
 
                 IntentResponse intentResponse = new IntentResponse();
@@ -90,7 +90,8 @@ namespace ModelGenerator.Writers
                     var lineParts = this.intentLineSplitter.Split(line);
                     var fragmentsContainer = string.Empty;
 
-                    if (lineParts.Length == 1) {
+                    if (lineParts.Length == 1)
+                    {
                         fragmentsContainer = lineParts[0];
                     }
                     else if (lineParts.Length > 1)
@@ -111,10 +112,11 @@ namespace ModelGenerator.Writers
                     for (int j = 0; j < fragmentTokens.Length; j += 1)
                     {
                         Console.WriteLine("Processing token {0} of {1}", j + 1, fragmentTokens.Length);
-                        if (j != fragmentTokens.Length -1)
+                        if (j != fragmentTokens.Length - 1)
                         {
-                            Console.SetCursorPosition(0, Console.CursorTop-1);
+                            Console.SetCursorPosition(0, Console.CursorTop - 1);
                         }
+
                         var token = fragmentTokens[j];
 
                         if (token.StartsWith("<"))
@@ -123,12 +125,25 @@ namespace ModelGenerator.Writers
 
                             if (entityParserResult.HasError)
                             {
-                                Console.WriteLine("Ignoring line {0} of file {1}: {2}", i+1, fileName, line);
+                                Console.WriteLine("Ignoring line {0} of file {1}: {2}", i + 1, fileName, line);
                                 Console.WriteLine("Error {0}", entityParserResult.ErrorMessage);
                                 break;
                             }
                             else
                             {
+                                // if recognized entity doesn't exist add it to list of entities
+                                bool entityExists = entities.Any(ent => ent.EntityName == entityParserResult.Name);
+                                if (!entityExists)
+                                {
+                                    Console.WriteLine("Entity {0} not present in list of entities", entityParserResult.Name);
+                                    Entity entity = new Entity();
+                                    entity.EntityName = entityParserResult.Name;
+                                    entity.Id = Guid.NewGuid().ToString();
+                                    entity.Synonyms = new string[] { entityParserResult.Name };
+                                    entities.Add(entity);
+                                    Console.WriteLine("Entity {0} added to list of entities", entityParserResult.Name);
+                                }
+
                                 if (fragments.Count > 0)
                                 {
                                     UserSayData userSayDataInner = new UserSayData();
@@ -165,22 +180,28 @@ namespace ModelGenerator.Writers
                         }
                     }
 
-                    if (!entityParserResult.HasError && fragments.Count > 0)
+                    if (!entityParserResult.HasError)
                     {
-                        UserSayData userSayDataInner = new UserSayData();
-                        if (isBeginning)
+                        if (fragments.Count > 0)
                         {
-                            userSayDataInner.Text = String.Format("{0}", String.Join(" ", fragments));
-                        } else
-                        {
-                            userSayDataInner.Text = String.Format(" {0}", String.Join(" ", fragments));
+                            UserSayData userSayDataInner = new UserSayData();
+                            if (isBeginning)
+                            {
+                                userSayDataInner.Text = String.Format("{0}", String.Join(" ", fragments));
+                            }
+                            else
+                            {
+                                userSayDataInner.Text = String.Format(" {0}", String.Join(" ", fragments));
+                            }
+                            fragments.Clear();
+                            outputObject.Data.Add(userSayDataInner);
                         }
-                        fragments.Clear();
-                        outputObject.Data.Add(userSayDataInner);
-                    }
 
-                    intentsOutput.UserSays.Add(outputObject);
+                        intentsOutput.UserSays.Add(outputObject);
+                    }
                 }
+
+                intentsOutput.UserSays.Sort(new UserSayComparer());
 
                 string outputString = JsonConvert.SerializeObject(intentsOutput, Newtonsoft.Json.Formatting.Indented, new JsonSerializerSettings()
                 {
@@ -194,6 +215,17 @@ namespace ModelGenerator.Writers
                 fileOutputStream.Dispose();
 
                 Console.WriteLine("Done", entitiesAbsolutePath);
+            }
+        }
+
+        private class UserSayComparer : IComparer<UserSay>
+        {
+            public int Compare(UserSay x, UserSay y)
+            {
+                var result = x.Id.Length - y.Id.Length;
+                if (result != 0) { return result; }
+
+                return x.Id.CompareTo(y.Id);
             }
         }
     }
