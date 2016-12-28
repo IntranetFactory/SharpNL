@@ -90,14 +90,14 @@ namespace ModelGenerator.Tools
             result.HasError = !hasEndTag;
             if (result.HasError)
             {
-                result.ErrorMessage = "Missing end tag";
+                result.ErrorMessage = string.Format("Missing end tag </{0}>", startTagName);
                 return result;
             }
 
             result.HasError = !startTagName.Equals(endTagName);
             if (result.HasError)
             {
-                result.ErrorMessage = "Tag names do not match";
+                result.ErrorMessage = string.Format("Tag names do not match. Expected <{0}> to match </{1}>");
                 return result;
             }
 

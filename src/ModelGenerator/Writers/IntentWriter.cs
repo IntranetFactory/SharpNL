@@ -79,7 +79,6 @@ namespace ModelGenerator.Writers
 
                 for (int i = startIndex; i < lines.Count; i += 1)
                 {
-                    Console.WriteLine("Processing line {0} of {1}", i + 1, lines.Count);
                     var line = lines[i];
 
                     UserSay outputObject = new UserSay();
@@ -111,12 +110,6 @@ namespace ModelGenerator.Writers
                     EntityParserResult entityParserResult = new EntityParserResult();
                     for (int j = 0; j < fragmentTokens.Length; j += 1)
                     {
-                        Console.WriteLine("Processing token {0} of {1}", j + 1, fragmentTokens.Length);
-                        if (j != fragmentTokens.Length - 1)
-                        {
-                            Console.SetCursorPosition(0, Console.CursorTop - 1);
-                        }
-
                         var token = fragmentTokens[j];
 
                         if (token.StartsWith("<"))
