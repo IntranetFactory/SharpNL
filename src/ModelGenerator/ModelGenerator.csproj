@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,35 +61,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="model\input\entities\employee.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\entities\location.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\intents\intents1.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\intents\intents2.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\intents\manager.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="model\input\intents\pto.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="model2\input\entities\employee.csv" />
+    <None Include="model2\input\entities\location.csv" />
+    <None Include="model2\input\intents\manager.csv" />
+    <None Include="model2\input\intents\pto.csv" />
+    <None Include="model2\output\readme.md" />
+    <None Include="model2\output_sample\entities\employee.json" />
+    <None Include="model2\output_sample\entities\location.json" />
+    <None Include="model2\output_sample\intents\manager.json" />
+    <None Include="model2\output_sample\intents\pto.json" />
+    <None Include="model\input\entities\readme.md" />
+    <None Include="model\input\intents\intents1.csv" />
+    <None Include="model\input\intents\intents2.csv" />
     <None Include="model\output\readme.md" />
-    <None Include="model\output_sample\entities\employee.json" />
-    <None Include="model\output_sample\entities\location.json" />
-    <None Include="model\output_sample\intents\manager.json" />
-    <None Include="model\output_sample\intents\pto.json" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Dependencies\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="model2\output_sample\entities\hexdump.exe" />
+    <Content Include="model2\output_sample\intents\hexdump.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
