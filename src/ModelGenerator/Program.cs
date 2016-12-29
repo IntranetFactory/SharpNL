@@ -66,21 +66,21 @@ namespace ModelGenerator
 
             var modelFolder = claOptions["-mf"].ToString();
 
-            Console.WriteLine("Done.\n\n");
+           // Console.WriteLine("Done.\n\n");
 
             Console.WriteLine("Reading entities\n");
 
             var entitiesRelativePath = System.IO.Path.Combine(modelFolder, "input", "entities");
             IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
 
-            Console.WriteLine("Done. \n");
+            // Console.WriteLine("Done. \n");
 
             Console.WriteLine("Reading intents\n");
 
             var intentsRelativePath = System.IO.Path.Combine(modelFolder, "input", "intents");
             IList<IntentFileInfo> intents = IntentReader.Read(intentsRelativePath);
 
-            Console.WriteLine("Done. \n");
+            // Console.WriteLine("Done. \n");
 
             Console.WriteLine("Writing intents\n");
 

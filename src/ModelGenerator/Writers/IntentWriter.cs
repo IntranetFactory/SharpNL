@@ -35,7 +35,7 @@ namespace ModelGenerator.Writers
             {
                 var intentsOutputObject = intentsOutputObjects[outputIndex];
 
-                Console.WriteLine("Processing intent {0} of {1}", outputIndex + 1, intentsOutputObjects.Count);
+                // Console.WriteLine("Processing intent {0} of {1}", outputIndex + 1, intentsOutputObjects.Count);
 
                 var fileName = string.Format("{0}.json", intentsOutputObject.Name);
                 var fileAbsolutePath = Path.Combine(entitiesAbsolutePath, fileName);
@@ -55,7 +55,7 @@ namespace ModelGenerator.Writers
                 fileOutputStream.Flush();
                 fileOutputStream.Dispose();
 
-                Console.WriteLine("Done");
+                //Console.WriteLine("Done");
             }
         }
     }
