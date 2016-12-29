@@ -9,7 +9,7 @@ namespace ModelGenerator.Readers
 {
     static class IntentReader
     {
-        public static IList<Intent> Read(string folderRelativePath)
+        public static IList<IntentFileInfo> Read(string folderRelativePath)
         {
             var currentFolder = Directory.GetCurrentDirectory();
 
@@ -21,7 +21,7 @@ namespace ModelGenerator.Readers
             var fileInfos = directoryInfo.EnumerateFiles();
             var fileCount = fileInfos.Count();
 
-            List<Intent> result = new List<Intent>(fileCount);
+            List<IntentFileInfo> result = new List<IntentFileInfo>(fileCount);
 
             if (fileCount > 0)
             {
@@ -36,19 +36,23 @@ namespace ModelGenerator.Readers
             {
                 Console.Write("Processing file {0}", fileInfo.Name);
                 
+                IntentFileInfo intentFileInfo = new IntentFileInfo();
+                intentFileInfo.Id = Guid.NewGuid().ToString();
+                intentFileInfo.IntentName = Path.GetFileNameWithoutExtension(fileInfo.Name);
+
                 var fileInputStream = fileInfo.OpenRead();
                 var streamReader = new StreamReader(fileInputStream);
-                var contents = streamReader.ReadToEnd();
+
+                while(!streamReader.EndOfStream)
+                {
+                    var line = streamReader.ReadLine();
+                    intentFileInfo.Lines.Add(line);
+                }
 
                 streamReader.Close();
                 fileInputStream.Close();
 
-                Intent entity = new Intent();
-                entity.Id = Guid.NewGuid().ToString();
-                entity.IntentName = Path.GetFileNameWithoutExtension(fileInfo.Name);
-                entity.Text = contents;
-
-                result.Add(entity);
+                result.Add(intentFileInfo);
 
                 Console.WriteLine("... done");
             }

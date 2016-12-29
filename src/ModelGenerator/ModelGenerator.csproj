@@ -48,31 +48,47 @@
   <ItemGroup>
     <Compile Include="Models\EntitiesOutputObject.cs" />
     <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\Intent.cs" />
+    <Compile Include="Models\IntentFileInfo.cs" />
     <Compile Include="Models\IntentsOutputObject.cs" />
+    <Compile Include="Parsers\InlineIdIntentParser.cs" />
+    <Compile Include="Parsers\SimpleIntentParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\EntityReader.cs" />
     <Compile Include="Readers\IntentReader.cs" />
     <Compile Include="Tools\EntityParser.cs" />
+    <Compile Include="Tools\IIntentLineParser.cs" />
+    <Compile Include="Tools\IntentDefaultLineParser.cs" />
     <Compile Include="Tools\IntentLineSplitter.cs" />
     <Compile Include="Writers\EntityWriter.cs" />
     <Compile Include="Writers\IntentWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="model2\input\entities\employee.csv" />
-    <None Include="model2\input\entities\location.csv" />
-    <None Include="model2\input\intents\manager.csv" />
-    <None Include="model2\input\intents\pto.csv" />
+    <None Include="model2\input\entities\employee.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model2\input\entities\location.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model2\input\intents\manager.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model2\input\intents\pto.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="model2\output\readme.md" />
     <None Include="model2\output_sample\entities\employee.json" />
     <None Include="model2\output_sample\entities\location.json" />
     <None Include="model2\output_sample\intents\manager.json" />
     <None Include="model2\output_sample\intents\pto.json" />
     <None Include="model\input\entities\readme.md" />
-    <None Include="model\input\intents\intents1.csv" />
-    <None Include="model\input\intents\intents2.csv" />
+    <None Include="model\input\intents\intents1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="model\input\intents\intents2.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="model\output\readme.md" />
   </ItemGroup>
   <ItemGroup>

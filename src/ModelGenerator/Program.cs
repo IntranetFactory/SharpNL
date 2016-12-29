@@ -1,4 +1,5 @@
 ﻿using ModelGenerator.Models;
+using ModelGenerator.Parsers;
 using ModelGenerator.Readers;
 using ModelGenerator.Tools;
 using ModelGenerator.Writers;
@@ -77,21 +78,37 @@ namespace ModelGenerator
             Console.WriteLine("Reading intents\n");
 
             var intentsRelativePath = System.IO.Path.Combine(modelFolder, "input", "intents");
-            IList<Intent> intents = IntentReader.Read(intentsRelativePath);
+            IList<IntentFileInfo> intents = IntentReader.Read(intentsRelativePath);
 
             Console.WriteLine("Done. \n");
 
             Console.WriteLine("Writing intents\n");
 
-            IntentProcessingOptions intentProcessingOptions = new IntentProcessingOptions();
-            intentProcessingOptions.InlineIds = bool.Parse(claOptions["-ii"].ToString());
-            intentProcessingOptions.IgnoreHeaderLine = bool.Parse(claOptions["-hl"].ToString());
+            var inlineIds = bool.Parse(claOptions["-ii"].ToString());
+            var ignoreHeaderLine = bool.Parse(claOptions["-hl"].ToString());
 
             var intentOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "intents");
-            IntentLineSplitter intentLineSplitter = new IntentLineSplitter();
+
+            IList<IntentsOutputObject> intentsOutputObjects = new List<IntentsOutputObject>();
             EntityParser entityParser = new EntityParser();
-            IntentWriter intentWriter = new IntentWriter(intentLineSplitter, entityParser);
-            intentWriter.Write(intents, intentOutputFolderRelativePath, entities, intentProcessingOptions);
+            IntentDefaultLineParser lineParser = new IntentDefaultLineParser(entityParser);
+
+            if (inlineIds)
+            {
+                // do the inline id processing and respect ignore header line
+                IntentLineSplitter intentLineSplitter = new IntentLineSplitter();
+
+                InlineIdIntentParser parser = new InlineIdIntentParser(intentLineSplitter, lineParser);
+                intentsOutputObjects = parser.Parse(intents, entities, ignoreHeaderLine);
+            }
+            else
+            {
+                // do the simple processing
+                SimpleIntentParser simpleParser = new SimpleIntentParser(lineParser);
+                intentsOutputObjects = simpleParser.Parse(intents, entities);
+            }
+
+            IntentWriter.Write(intentsOutputObjects, intentOutputFolderRelativePath);
 
             Console.WriteLine("Finished processing intents\n\n");
 
