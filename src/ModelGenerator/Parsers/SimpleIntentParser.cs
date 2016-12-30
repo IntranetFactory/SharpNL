@@ -73,12 +73,16 @@ namespace ModelGenerator.Parsers
                             Entity entity = intentLineParserResult.Entities[entityIndex];
 
                             // if recognized entity doesn't exist add it to list of entities
-                            bool entityExists = entities.Any(ent => ent.EntityName == entity.EntityName);
-                            if (!entityExists)
+                            var existingEntity = entities.FirstOrDefault(ent => ent.EntityName == entity.EntityName);
+                            if (existingEntity == null)
                             {
                                 Console.WriteLine("Entity {0} not present in list of entities", entity.EntityName);
                                 entities.Add(entity);
                                 Console.WriteLine("Entity {0} added to list of entities", entity.EntityName);
+                            }
+                            else
+                            {
+                                existingEntity.Synonyms = existingEntity.Synonyms.Concat(entity.Synonyms).ToArray();
                             }
 
                             if (!intentResponse.Parameters.Any(p => p.Name == entity.EntityName))

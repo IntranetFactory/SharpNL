@@ -62,7 +62,8 @@ namespace ModelGenerator.Tools
                         Entity entity = new Entity();
                         entity.EntityName = entityParserResult.Name;
                         entity.Id = Guid.NewGuid().ToString();
-                        entity.Synonyms = new string[] { entityParserResult.Name };
+                        var synonymStr = string.Format("{0},{1}", entityParserResult.Value, entityParserResult.Value);
+                        entity.Synonyms = new string[] { synonymStr };
                         result.Entities.Add(entity);
 
                         if (lineFragmets.Count > 0)
