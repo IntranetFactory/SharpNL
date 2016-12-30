@@ -99,7 +99,9 @@ namespace ModelGenerator.Parsers
                     intentsOutputObject.UserSays.Add(userSay);
                 }
 
-                result.Add(intentsOutputObject);
+                if (intentsOutputObject.UserSays.Count > 0) {
+                    result.Add(intentsOutputObject);
+                }
             }
 
             return result;

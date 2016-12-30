@@ -80,6 +80,12 @@ namespace ModelGenerator.Parsers
                     {
                         Console.WriteLine("Ignoring line {0} of file {1}: {2}", lineIndex + 1, intentFileInfo.IntentName, line);
                         Console.WriteLine("Error {0}", intentLineParserResult.ErrorMessage);
+
+                        if (intentsOutputObject.UserSays.Count == 0)
+                        {
+                            currentData.Remove(intentId);
+                        }
+
                         continue;
                     }
                     else
