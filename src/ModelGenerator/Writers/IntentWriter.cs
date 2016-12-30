@@ -1,9 +1,11 @@
 ﻿using ModelGenerator.Models;
+using ModelGenerator.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ModelGenerator.Writers
 {
@@ -23,7 +25,8 @@ namespace ModelGenerator.Writers
                 Console.Write("Folder {0} doesn't exist. Creating ... ", entitiesAbsolutePath);
                 directoryInfo.Create();
                 Console.WriteLine("done");
-            } else
+            }
+            else
             {
                 foreach (var fileInfo in directoryInfo.EnumerateFiles())
                 {
@@ -31,9 +34,13 @@ namespace ModelGenerator.Writers
                 }
             }
 
-            for (int outputIndex = 0; outputIndex < intentsOutputObjects.Count; outputIndex++)
+
+            var sorted = intentsOutputObjects.ToList();
+            sorted.Sort(new IntentOutputObjectComparer());
+
+            for (int outputIndex = 0; outputIndex < sorted.Count; outputIndex++)
             {
-                var intentsOutputObject = intentsOutputObjects[outputIndex];
+                var intentsOutputObject = sorted[outputIndex];
 
                 // Console.WriteLine("Processing intent {0} of {1}", outputIndex + 1, intentsOutputObjects.Count);
 

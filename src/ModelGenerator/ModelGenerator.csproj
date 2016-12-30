@@ -60,6 +60,7 @@
     <Compile Include="Tools\IIntentLineParser.cs" />
     <Compile Include="Tools\IntentDefaultLineParser.cs" />
     <Compile Include="Tools\IntentLineSplitter.cs" />
+    <Compile Include="Tools\IntentOutputObjectComparer.cs" />
     <Compile Include="Writers\EntityWriter.cs" />
     <Compile Include="Writers\IntentWriter.cs" />
   </ItemGroup>

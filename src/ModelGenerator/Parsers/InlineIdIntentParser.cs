@@ -45,10 +45,11 @@ namespace ModelGenerator.Parsers
                     var lineParts = this.intentLineSplitter.Split(line);
                     if (lineParts.Length < 2) { continue; }
 
-                    var intentId = lineParts[0];
+                    var intentId = lineParts[0].Trim();
                     var intentText = lineParts[1];
 
                     if (string.IsNullOrEmpty(intentId)) { continue; }
+                    if (string.IsNullOrEmpty(intentText)) { continue; }
 
                     var intentsOutputObject = new IntentsOutputObject();
                     var intentResponse = new IntentResponse();
