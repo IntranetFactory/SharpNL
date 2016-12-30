@@ -102,6 +102,7 @@ U9,Manage online user bios and CVs,,1000075
 U27,Plan a Business Trip,"travel, expenses",1000024
 U16,Report an incident to HR that involves corporate insurance,"Employee, Welfare, Incident, Insurance",1000068
 U23,Report an IT Problem,"help, windows, ticket, case",1000028
+U23 ,Report an PC Problem,"help, windows, ticket, case",1000028
 U21,Request a telephone,Telephone,1000063
 U22,Request maintenance for my computer/printer,"Support, Problem, Technical, Assistance, Maintenance,",1000062
 U7,Request my department to provide complimentary ice cream :-),,1000077
