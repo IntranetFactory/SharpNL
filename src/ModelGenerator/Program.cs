@@ -5,7 +5,7 @@ using ModelGenerator.Tools;
 using ModelGenerator.Writers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace ModelGenerator
 {
@@ -17,109 +17,85 @@ namespace ModelGenerator
             Console.WriteLine("Processing command line arguments ... \n");
 
             // create a dictionary for claOptions and assign default values
-            Dictionary<string, object> claOptions = new Dictionary<string, object>();
-            claOptions.Add("-ii", false);
-            claOptions.Add("-hl", false);
-            claOptions.Add("-mf", "model");
+            CommandLineArgumentsParser claParser = new CommandLineArgumentsParser();
+            var claParserResult = claParser.Parse(args);
 
-            string[] boolSwitches = new string[] { "-ii", "-hl" };
-
-            var expectValue = false;
-            var lastSwitch = "";
-            for (int i = 0; i < args.Length; i++)
+            if (claParserResult.HasError)
             {
-                var arg = args[i];
+                Console.WriteLine("Error processing command line arguments: {0}", claParserResult.ErrorMessage);
+                Console.ReadLine();
+                return;
+            }
 
-                if (!expectValue) { lastSwitch = arg; }
+            var settings = claParserResult.ApplicationSettings;
+            LogCommandLineParameterToConsole("-ii", settings.InlineIds);
+            LogCommandLineParameterToConsole("-hl", settings.IgnoreHeaderLine);
+            LogCommandLineParameterToConsole("-mf", settings.ModelFolder);
 
-                if (arg.StartsWith("-"))
+            var modelFolder = settings.ModelFolder;
+
+            // Console.WriteLine("Done.\n\n");
+
+            try
+            {
+                Console.WriteLine("Reading entities\n");
+
+                var entitiesRelativePath = System.IO.Path.Combine(modelFolder, "input", "entities");
+                IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
+
+                // Console.WriteLine("Done. \n");
+
+                Console.WriteLine("Reading intents\n");
+
+                var intentsRelativePath = System.IO.Path.Combine(modelFolder, "input", "intents");
+                IList<IntentFileInfo> intents = IntentReader.Read(intentsRelativePath);
+
+                // Console.WriteLine("Done. \n");
+
+                Console.WriteLine("Writing intents\n");
+
+                var intentOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "intents");
+
+                IList<IntentsOutputObject> intentsOutputObjects = new List<IntentsOutputObject>();
+                EntityParser entityParser = new EntityParser();
+                IntentDefaultLineParser lineParser = new IntentDefaultLineParser(entityParser);
+
+                if (settings.InlineIds)
                 {
-                    if (expectValue)
-                    {
-                        // log error
-                        Console.WriteLine("Error: {0} switch not specified correctly. Missing value", lastSwitch);
-                        Console.ReadLine();
-                        return;
-                    }
+                    // do the inline id processing and respect ignore header line
+                    IntentLineSplitter intentLineSplitter = new IntentLineSplitter();
 
-                    var isBoolSwitch = boolSwitches.Any(s => s == arg);
-                    if (isBoolSwitch)
-                    {
-                        claOptions[arg] = true;
-                    }
-                    else
-                    {
-                        expectValue = true;
-                    }
+                    InlineIdIntentParser parser = new InlineIdIntentParser(intentLineSplitter, lineParser);
+                    intentsOutputObjects = parser.Parse(intents, entities, settings.IgnoreHeaderLine);
                 }
                 else
                 {
-                    claOptions[lastSwitch] = arg;
-                    expectValue = false;
+                    // do the simple processing
+                    SimpleIntentParser simpleParser = new SimpleIntentParser(lineParser);
+                    intentsOutputObjects = simpleParser.Parse(intents, entities);
                 }
-            }
 
-            foreach (var item in claOptions)
+                IntentWriter.Write(intentsOutputObjects, intentOutputFolderRelativePath);
+
+                Console.WriteLine("Finished processing intents\n\n");
+
+                Console.WriteLine("Writing entities\n");
+
+                var entitiesOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "entities");
+                EntityWriter.Write(entities, entitiesOutputFolderRelativePath);
+
+                Console.WriteLine("Finished processing entities\n\n");
+
+                Console.WriteLine("Models generation completed");
+            }
+            catch (DirectoryNotFoundException ex)
             {
-                LogCommandLineParameterToConsole(item.Key, item.Value);
+                Console.WriteLine(ex.Message);
             }
-
-            var modelFolder = claOptions["-mf"].ToString();
-
-           // Console.WriteLine("Done.\n\n");
-
-            Console.WriteLine("Reading entities\n");
-
-            var entitiesRelativePath = System.IO.Path.Combine(modelFolder, "input", "entities");
-            IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
-
-            // Console.WriteLine("Done. \n");
-
-            Console.WriteLine("Reading intents\n");
-
-            var intentsRelativePath = System.IO.Path.Combine(modelFolder, "input", "intents");
-            IList<IntentFileInfo> intents = IntentReader.Read(intentsRelativePath);
-
-            // Console.WriteLine("Done. \n");
-
-            Console.WriteLine("Writing intents\n");
-
-            var inlineIds = bool.Parse(claOptions["-ii"].ToString());
-            var ignoreHeaderLine = bool.Parse(claOptions["-hl"].ToString());
-
-            var intentOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "intents");
-
-            IList<IntentsOutputObject> intentsOutputObjects = new List<IntentsOutputObject>();
-            EntityParser entityParser = new EntityParser();
-            IntentDefaultLineParser lineParser = new IntentDefaultLineParser(entityParser);
-
-            if (inlineIds)
+            catch (Exception ex)
             {
-                // do the inline id processing and respect ignore header line
-                IntentLineSplitter intentLineSplitter = new IntentLineSplitter();
-
-                InlineIdIntentParser parser = new InlineIdIntentParser(intentLineSplitter, lineParser);
-                intentsOutputObjects = parser.Parse(intents, entities, ignoreHeaderLine);
+                Console.WriteLine(ex.Message);
             }
-            else
-            {
-                // do the simple processing
-                SimpleIntentParser simpleParser = new SimpleIntentParser(lineParser);
-                intentsOutputObjects = simpleParser.Parse(intents, entities);
-            }
-
-            IntentWriter.Write(intentsOutputObjects, intentOutputFolderRelativePath);
-
-            Console.WriteLine("Finished processing intents\n\n");
-
-            Console.WriteLine("Writing entities\n");
-
-            var entitiesOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "entities");
-            EntityWriter.Write(entities, entitiesOutputFolderRelativePath);
-
-            Console.WriteLine("Finished processing entities\n\n");
-
-            Console.WriteLine("Models generation completed");
 
             Console.WriteLine("Finished. Press ENTER to exit");
             Console.ReadLine();
