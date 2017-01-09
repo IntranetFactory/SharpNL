@@ -67,9 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="model2017\input\entities\empty.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="model2017\input\intents\Model2017.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
