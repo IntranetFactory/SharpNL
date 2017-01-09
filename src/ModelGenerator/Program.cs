@@ -36,22 +36,42 @@ namespace ModelGenerator
 
             // Console.WriteLine("Done.\n\n");
 
+            IList<Entity> entities = new List<Entity>();
+            IList<IntentFileInfo> intents = new List<IntentFileInfo>();
+
+            Console.WriteLine("Reading entities\n");
+            var entitiesRelativePath = Path.Combine(modelFolder, "input", "entities");
             try
             {
-                Console.WriteLine("Reading entities\n");
+                entities = EntityReader.Read(entitiesRelativePath);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.WriteLine("Folder {0} not found. Skipping ...", entitiesRelativePath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-                var entitiesRelativePath = System.IO.Path.Combine(modelFolder, "input", "entities");
-                IList<Entity> entities = EntityReader.Read(entitiesRelativePath);
+            // Console.WriteLine("Done. \n");
+            Console.WriteLine("Reading intents\n");
+            var intentsRelativePath = Path.Combine(modelFolder, "input", "intents");
+            try
+            {
+                intents = IntentReader.Read(intentsRelativePath);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.WriteLine("Folder {0} not found. Skipping ...", intentsRelativePath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-                // Console.WriteLine("Done. \n");
-
-                Console.WriteLine("Reading intents\n");
-
-                var intentsRelativePath = System.IO.Path.Combine(modelFolder, "input", "intents");
-                IList<IntentFileInfo> intents = IntentReader.Read(intentsRelativePath);
-
-                // Console.WriteLine("Done. \n");
-
+            try
+            {
                 Console.WriteLine("Writing intents\n");
 
                 var intentOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "intents");
@@ -78,7 +98,18 @@ namespace ModelGenerator
                 IntentWriter.Write(intentsOutputObjects, intentOutputFolderRelativePath);
 
                 Console.WriteLine("Finished processing intents\n\n");
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            // Console.WriteLine("Done. \n");
 
+            try { 
                 Console.WriteLine("Writing entities\n");
 
                 var entitiesOutputFolderRelativePath = System.IO.Path.Combine(modelFolder, "output", "entities");

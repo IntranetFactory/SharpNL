@@ -106,7 +106,15 @@ namespace ModelGenerator.Parsers
                             }
                             else
                             {
-                                existingEntity.Synonyms = existingEntity.Synonyms.Concat(entity.Synonyms).ToArray();
+                                List<string> synonymsToConcat = new List<string>();
+                                foreach (var synonym in entity.Synonyms)
+                                {
+                                    if (!existingEntity.Synonyms.Any(s => s == synonym))
+                                    {
+                                        synonymsToConcat.Add(synonym);
+                                    }
+                                }
+                                existingEntity.Synonyms = existingEntity.Synonyms.Concat(synonymsToConcat).ToArray();
                             }
 
                             if (!intentResponse.Parameters.Any(p => p.Name == entity.EntityName))
