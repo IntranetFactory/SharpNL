@@ -1,0 +1,84 @@
+{
+  "userSays": [
+    {
+      "id": "917a15d8-c453-4abe-bab4-113c57ce44dd",
+      "data": [
+        {
+          "text": "is "
+        },
+        {
+          "text": "james",
+          "alias": "employee",
+          "meta": "@employee",
+          "userDefined": true
+        },
+        {
+          "text": " in the office today?"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "805b7812-3407-432f-bd92-561792631e9e",
+      "data": [
+        {
+          "text": "to whom reports "
+        },
+        {
+          "text": "james",
+          "alias": "employee",
+          "meta": "@employee",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "db07e288-8edd-4c5f-8a5c-59a3d722df7f",
+      "data": [
+        {
+          "text": "who is the manager of "
+        },
+        {
+          "text": "willi",
+          "alias": "employee",
+          "meta": "@employee",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "de427fcb-b370-48e2-91b0-38e7edaf341b",
+  "name": "manager",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "dataType": "@employee",
+          "name": "employee",
+          "value": "$employee",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "speech": []
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

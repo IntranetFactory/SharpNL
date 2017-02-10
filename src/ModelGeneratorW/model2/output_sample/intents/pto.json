@@ -1,0 +1,66 @@
+{
+  "userSays": [
+    {
+      "id": "dc7950ae-90d8-4b5a-a58d-1d7007c0f750",
+      "data": [
+        {
+          "text": "how many days of annual leave do I have"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "641f12fa-dac6-48d1-a5d1-7a00a3938769",
+      "data": [
+        {
+          "text": "how to request time off"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "19d25a79-0aeb-484e-9992-29303ef422b5",
+      "data": [
+        {
+          "text": "i need time off"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "b2c56b86-63a9-4a8b-b8a1-546c7e8a4dff",
+      "data": [
+        {
+          "text": "I need pto"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "ac9e5800-9684-425d-83d7-e35e31a8caff",
+  "name": "pto",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": []
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

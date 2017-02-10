@@ -1,0 +1,157 @@
+Uid,I Want To,Tags,Id
+U1,Find an expert,"Expert, Knoweldge",1000084
+U1,I want to Find an expert,"Expert, Knoweldge",1000084
+U1,I would like to Find an expert,"Expert, Knoweldge",1000084
+U10,I want to See my health plan care options,,1000074
+U10,I would like to See my health plan care options,,1000074
+U10,See my health plan care options,,1000074
+U11,Enroll to training courses,Training,1000073
+U11,I want to Enroll to training courses,Training,1000073
+U11,I would like to Enroll to training courses,Training,1000073
+U12,"Find the most current Employment Application form, and instructions","Recruitment, Job, Promotion",1000072
+U12,"I want to Find the most current Employment Application form, and instructions","Recruitment, Job, Promotion",1000072
+U12,"I would like to Find the most current Employment Application form, and instructions","Recruitment, Job, Promotion",1000072
+U13,I want to Suggest a colleague to get an award,Award,1000071
+U13,I would like to Suggest a colleague to get an award,Award,1000071
+U13,Suggest a colleague to get an award,Award,1000071
+U14,Access supervisor resources and training materials,"Training, Resources,",1000070
+U14,I want to Access supervisor resources and training materials,"Training, Resources,",1000070
+U14,I would like to Access supervisor resources and training materials,"Training, Resources,",1000070
+U15,I want to See my today's tasks,Tasks,1000069
+U15,I would like to See my today's tasks,Tasks,1000069
+U15,See my today's tasks,Tasks,1000069
+U16,I want to Report an incident to HR that involves corporate insurance,"Employee, Welfare, Incident, Insurance",1000068
+U16,I would like to Report an incident to HR that involves corporate insurance,"Employee, Welfare, Incident, Insurance",1000068
+U16,Report an incident to HR that involves corporate insurance,"Employee, Welfare, Incident, Insurance",1000068
+U17,I want to Manage Leave Requests,"Leave, Request, Off time,",1000067
+U17,I would like to Manage Leave Requests,"Leave, Request, Off time,",1000067
+U17,Manage Leave Requests,"Leave, Request, Off time,",1000067
+U18,I want to View the company’s or a division’s organizational chart,,1000066
+U18,I would like to View the company’s or a division’s organizational chart,,1000066
+U18,View the company’s or a division’s organizational chart,,1000066
+U19,Change my personal details the company holds from me,"Information, Contact, Details,",1000065
+U19,I want to Change my personal details the company holds from me,"Information, Contact, Details,",1000065
+U19,I would like to Change my personal details the company holds from me,"Information, Contact, Details,",1000065
+U2,I want to  Upload a video to the Corporate YouTube,"Videos, YouTube",1000083
+U2,I would like to Upload a video to the Corporate YouTube,"Videos, YouTube",1000083
+U2,Upload a video to the Corporate YouTube,"Videos, YouTube",1000083
+U20,I want to Look up an account or customer reference number,"Customer, Account,",1000064
+U20,I would like to Look up an account or customer reference number,"Customer, Account,",1000064
+U20,Look up an account or customer reference number,"Customer, Account,",1000064
+U21,I want to Request a telephone,Telephone,1000063
+U21,I would like to Request a telephone,Telephone,1000063
+U21,Request a telephone,Telephone,1000063
+U22,I want to Request maintenance for my computer/printer,"Support, Problem, Technical, Assistance, Maintenance,",1000062
+U22,I would like to Request maintenance for my computer/printer,"Support, Problem, Technical, Assistance, Maintenance,",1000062
+U22,Request maintenance for my computer/printer,"Support, Problem, Technical, Assistance, Maintenance,",1000062
+U23,I want to Report an IT Problem,"help, windows, ticket, case",1000028
+U23,I would like to Report an IT Problem,"help, windows, ticket, case",1000028
+U23,Report an IT Problem,"help, windows, ticket, case",1000028
+U24,I want to View Customer Contracts,,1000027
+U24,I would like to View Customer Contracts,,1000027
+U24,View Customer Contracts,,1000027
+U25,Find Vendor Contact Information,,1000026
+U25,I want to Find Vendor Contact Information,,1000026
+U25,I would like to Find Vendor Contact Information,,1000026
+U26,I want to Request Travel Expense Reimbursement,"trip, travel, expense",1000025
+U26,I would like to Request Travel Expense Reimbursement,"trip, travel, expense",1000025
+U26,Request Travel Expense Reimbursement,"trip, travel, expense",1000025
+U27,I want to Plan a Business Trip,"travel, expenses",1000024
+U27,I would like to Plan a Business Trip,"travel, expenses",1000024
+U27,Plan a Business Trip,"travel, expenses",1000024
+U28,I want to Submit an Idea,,1000023
+U28,I would like to Submit an Idea,,1000023
+U28,Submit an Idea,,1000023
+U29,I want to Update my Profile Page,"Profile, Information, Picture, Image, Photo,",1000022
+U29,I would like to Update my Profile Page,"Profile, Information, Picture, Image, Photo,",1000022
+U29,Update my Profile Page,"Profile, Information, Picture, Image, Photo,",1000022
+U3,I want to Speak to a technician,"Support, Technical, Assistance",1000081
+U3,I would like to Speak to a technician,"Support, Technical, Assistance",1000081
+U3,Speak to a technician,"Support, Technical, Assistance",1000081
+U30,Change My Password,,1000021
+U30,I want to Change My Password,,1000021
+U30,I would like to Change My Password,,1000021
+U31,Find the Phone Number of a Colleague,,1000019
+U31,I want to Find the Phone Number of a Colleague,,1000019
+U31,I would like to Find the Phone Number of a Colleague,,1000019
+U32,I want to Reserve a Meeting Room,"Meeting, Meeting Room, Conference",1000018
+U32,I would like to Reserve a Meeting Room,"Meeting, Meeting Room, Conference",1000018
+U32,Reserve a Meeting Room,"Meeting, Meeting Room, Conference",1000018
+pto_request_form,I want to Request Time Off,"pto, xto",1000017
+pto_request_form,I would like to Request Time Off,"pto, xto",1000017
+pto_request_form,Request Time Off,"pto, xto",1000017
+pto_request_form,I want to take PTO,,
+pto_request_form,I want to request PTO,,
+find_manager_card,to whom reports <employee>Susan</employee>,"Profile, Org. Chart",
+find_manager_card,show me the manager of <employee>Jim</employee>,"Profile, Org. Chart",
+find_manager_card,Who is the manager of <employee>James</employee>,"Profile, Org. Chart",
+find_manager_card,Who does <employee>Cheryl Kay</employee> report to?,"Profile, Org. Chart",
+employee_profile_card,Who is <employee>James</employee>,"Profile, Org. Chart",
+employee_profile_card,what is the phone number of <employee>James</employee>,"Profile, Org. Chart",
+employee_profile_card,show me the extension of <employee>James</employee>,"Profile, Org. Chart",
+employee_profile_card,where is <employee>James</employee> located?,"Profile, Org. Chart",
+employee_profile_card,I need to reach <employee>Aaron Tanner</employee>,"Profile, Org. Chart",
+U35,Who is the substitute of ...,"Profile, Org. Chart",
+U36,I want to order office supply,,
+U37,I need facility management,,
+U39,I want to order lunch/beverages for meeting XX,,
+U4,Find out more about policies,Policies,1000080
+U4,I want to  Find out more about policies,Policies,1000080
+U4,I would like to Find out more about policies,Policies,1000080
+U40,Who is responsible for ....,,
+U42,I want to see my expense report,,
+U43,I want to book a ....,,
+U43,I want to make a reservation,,
+U43,I would like to book a ...,,
+U43,I would like to reserve a ...,,
+U44,I want to see my open support cases,,
+U44,Show me my open support cases,,
+U45,I need to reach a collegue,,
+pto_status_card,How many days of leave do I have left,,
+pto_status_card,How many hours of PTO do I have left,,
+pto_status_card,How many hours of paid time off do I have left,,
+pto_status_card,How many hours of PTO did I already use this year,,
+find_meetingroom_card,Where is meeting room <meetingroom>Kansas</meetingroom> located?,,
+find_meetingroom_card,where do I find meeting room <meetingroom>Kansas</meetingroom>?,,
+U47,Where is <person> <room> <department> <storage place>,,
+U48,Which <room> <car> <technician> <driver> is available in <hours>,,
+U48,Which <room> <car> <technician> <driver> is available today,,
+U49,I have issues with IT <update> <device> <login>,,
+U5,Browse corporate news,News,1000079
+U5,I want to Browse corporate news,News,1000079
+U5,I would like to Browse corporate news,News,1000079
+U50,I want to submit my expense report,,
+U51,I want to see a customer contract,,
+U52,Have I reached my sales goal yet,,
+U52,How much do I need to reach my sales goal,,
+U53,Show me my appointments at <date> ,,
+U53,Show me my meetings at <date> ,,
+U53,Show me my meetings next <hour> <day> <week> <day of the week>,,
+U53 ,Show me my appointments next <hour> <day> <week> <day of the week>,,
+U54,How much budget of my <team's> <department's> budget is left,,
+U56,I want to report an incident ,,
+U57,Show me all escalated helpdesk tickets,,
+U58,Show me all escalated SLAs from last <day> <week> <month>,,
+U59,Show me overdue invoices from customer,,
+U6,Get more great ideas for Use Cases,,1000078
+U6,I want to Get more great ideas for Use Cases,,1000078
+U6,I would like to Get more great ideas for Use Cases,,1000078
+U60,Show me open invoices from customer,,
+U61,Show me the order volume from <team> <region> <customer>,,
+U62,When is the next safety audit,,
+U63,Show procurement contracts becoming due for review next month,,
+U64,Check my 401k balance,,
+U64,Show me my 401k balance,,
+U65,What do I do in case of <incident> <accident> <delay> <legal issue>,,
+U66,Can I convert my 401k to a Roth 401k,,
+U66,I want to convert my 401k to a Roth 401k,,
+U67,How much stock of <product>4711</product> do we have,,
+U7,I want to Request my department to provide complimentary ice cream :-),,1000077
+U7,I would like to Request my department to provide complimentary ice cream :-),,1000077
+U7,Request my department to provide complimentary ice cream :-),,1000077
+U8,I want to See the best ideas in the virtual suggestion box,,1000076
+U8,I would like to See the best ideas in the virtual suggestion box,,1000076
+U8,See the best ideas in the virtual suggestion box,,1000076
+U9,I want to Manage online user bios and CVs,,1000075
+U9,I would like to Manage online user bios and CVs,,1000075
+U9,Manage online user bios and CVs,,1000075

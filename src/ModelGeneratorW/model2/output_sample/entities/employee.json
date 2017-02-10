@@ -1,0 +1,39 @@
+{
+  "id": "94cf7967-1993-49f2-b956-9d2ee58a7472",
+  "name": "employee",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "user",
+      "synonyms": [
+        "user"
+      ]
+    },
+    {
+      "value": "sam",
+      "synonyms": [
+        "sam",
+        "samantha",
+        "jones",
+        "samantha jones"
+      ]
+    },
+    {
+      "value": "james",
+      "synonyms": [
+        "james",
+        "cook",
+        "james cook",
+        "james@toaster.com"
+      ]
+    },
+    {
+      "value": "willi",
+      "synonyms": [
+        "willi"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": true
+}
