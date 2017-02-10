@@ -77,11 +77,11 @@ namespace ModelGeneratorW
                 Console.WriteLine(ex.Message);
             }
 
+            IList<IntentsOutputObject> intentsOutputObjects = new List<IntentsOutputObject>();
             try
             {
                 Console.WriteLine("Writing intents\n");
 
-                IList<IntentsOutputObject> intentsOutputObjects = new List<IntentsOutputObject>();
                 EntityParser entityParser = new EntityParser();
                 IntentDefaultLineParser lineParser = new IntentDefaultLineParser(entityParser);
 
@@ -113,7 +113,7 @@ namespace ModelGeneratorW
             // Console.WriteLine("Done. \n");
 
             // create name of the folder that will contain everything to be compressed
-            var folderToBeCompressed = string.Format("{0}W", modelFolder);
+            var folderToBeCompressed = modelFolder;
 
             // create relative paht for the entities folder under folder to be compressed
             var entitiesFolderToBeCompressed = Path.Combine(folderToBeCompressed, "entities");
@@ -148,65 +148,68 @@ namespace ModelGeneratorW
             // prepare expressions output object
             var expressionsOutputObject = new ExpressionsOutputObject();
 
-            for (int i = 0; i < intents.Count; i++)
+            for (int i = 0; i < intentsOutputObjects.Count; i++)
             {
-                var intent = intents[i];
-                for (int j = 0; j < intent.Lines.Count; j++)
+                var intent = intentsOutputObjects[i];
+                for (int j = 0; j < intent.UserSays.Count; j++)
                 {
-                    var intentLine = intent.Lines[j];
-                    intentLine = intentLine.Remove(0, 1);
-                    intentLine = intentLine.Remove(intentLine.Length - 1, 1);
+                    var userSaysData = intent.UserSays[j].Data;
 
-                    var containedEntityNames = new List<string>();
-                    var expressionOutputObject = new ExpressionOutputObject();
-
-                    var containedEntities = new List<ExpressionEntityEntryOutputObject>();
-                    containedEntities.Add(new ExpressionEntityEntryOutputObject("intent", string.Format("\"{0}\"", intent.IntentName)));
-
-                    for (int k = 0; k < entities.Count; k++)
+                    for (int k1 = 0; k1 < userSaysData.Count; k1++)
                     {
-                        var entity = entities[k];
-                        if (intentLine.Contains(entity.EntityName))
+                        var textLine = userSaysData[k1].Text;
+
+                        var containedEntityNames = new List<string>();
+                        var expressionOutputObject = new ExpressionOutputObject();
+
+                        var containedEntities = new List<ExpressionEntityEntryOutputObject>();
+                        containedEntities.Add(new ExpressionEntityEntryOutputObject("intent", string.Format("\"{0}\"", intent.Name)));
+
+                        for (int k = 0; k < entities.Count; k++)
                         {
-                            containedEntityNames.Add(entity.EntityName);
+                            var entity = entities[k];
+                            if (textLine.Contains(entity.EntityName))
+                            {
+                                containedEntityNames.Add(entity.EntityName);
+                            }
                         }
-                    }
 
-                    for (int k = 0; k < containedEntityNames.Count; k++)
-                    {
-                        // if intent line contains an entity 
-                        var entityName = containedEntityNames[k];
-
-                        // find value 
-                        var entityOpenTag = string.Format("<{0}>", entityName);
-                        var entityCloseTag = string.Format("</{0}>", entityName);
-                        var openTagStartIndex = intentLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
-                        while (openTagStartIndex > 0)
+                        for (int k = 0; k < containedEntityNames.Count; k++)
                         {
-                            var containedEntity = new ExpressionEntityEntryOutputObject(entityName);
-                            var openTagEndIndex = openTagStartIndex + entityOpenTag.Length;
-                            var endTagStartIndex = intentLine.IndexOf(entityCloseTag, StringComparison.InvariantCultureIgnoreCase);
-                            containedEntity.Value = intentLine.Substring(openTagEndIndex, endTagStartIndex - openTagEndIndex);
+                            // if intent line contains an entity 
+                            var entityName = containedEntityNames[k];
 
-                            // replace entity open tag and entity end tag with empty strings
-                            intentLine = intentLine.Remove(endTagStartIndex, entityCloseTag.Length);
-                            intentLine = intentLine.Remove(openTagStartIndex, entityOpenTag.Length);
+                            // find value 
+                            var entityOpenTag = string.Format("<{0}>", entityName);
+                            var entityCloseTag = string.Format("</{0}>", entityName);
+                            var openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
+                            while (openTagStartIndex > 0)
+                            {
+                                var containedEntity = new ExpressionEntityEntryOutputObject(entityName);
+                                var openTagEndIndex = openTagStartIndex + entityOpenTag.Length;
+                                var endTagStartIndex = textLine.IndexOf(entityCloseTag, StringComparison.InvariantCultureIgnoreCase);
+                                containedEntity.Value = textLine.Substring(openTagEndIndex, endTagStartIndex - openTagEndIndex);
 
-                            var valueStartIndex = intentLine.IndexOf(containedEntity.Value);
+                                // replace entity open tag and entity end tag with empty strings
+                                textLine = textLine.Remove(endTagStartIndex, entityCloseTag.Length);
+                                textLine = textLine.Remove(openTagStartIndex, entityOpenTag.Length);
 
-                            containedEntity.Start = valueStartIndex;
-                            containedEntity.End = valueStartIndex + containedEntity.Value.Length;
-                            containedEntities.Add(containedEntity);
-                            containedEntity.Value = string.Format("\"{0}\"", containedEntity.Value);
+                                var valueStartIndex = textLine.IndexOf(containedEntity.Value);
 
-                            openTagStartIndex = intentLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
+                                containedEntity.Start = valueStartIndex;
+                                containedEntity.End = valueStartIndex + containedEntity.Value.Length;
+                                containedEntities.Add(containedEntity);
+                                containedEntity.Value = string.Format("\"{0}\"", containedEntity.Value);
+
+                                openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
+                            }
                         }
-                    }
 
-                    expressionOutputObject.Text = intentLine;
-                    // else if it doesn't contain an entity intent entity is already added
-                    expressionOutputObject.Entities.AddRange(containedEntities);
-                    expressionsOutputObject.Data.Add(expressionOutputObject);
+                        expressionOutputObject.Text = textLine;
+                        // else if it doesn't contain an entity intent entity is already added
+                        expressionOutputObject.Entities.AddRange(containedEntities);
+                        expressionsOutputObject.Data.Add(expressionOutputObject);
+                    }
                 }
             }
 
@@ -253,13 +256,13 @@ namespace ModelGeneratorW
             }
 
             // prepare intent output object
-            var intentsOutputObject = new IntentsOutputObjectW();
+            var intentsWOutputObject = new IntentsOutputObjectW();
 
-            for (int i = 0; i < intents.Count; i++)
+            for (int i = 0; i < intentsOutputObjects.Count; i++)
             {
-                var intent = intents[i];
-                var intentOutputObject = new IntentOutputObjectW(intent.IntentName);
-                intentsOutputObject.Data.Values.Add(intentOutputObject);
+                var intent = intentsOutputObjects[i];
+                var intentWOutputObject = new IntentOutputObjectW(intent.Name);
+                intentsWOutputObject.Data.Values.Add(intentWOutputObject);
             }
 
             // write to disk
@@ -273,60 +276,59 @@ namespace ModelGeneratorW
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 };
 
-                // create output folder
-                DirectoryInfo outputFolder = new DirectoryInfo(folderToBeCompressed);
-                if (!outputFolder.Exists) { outputFolder.Create(); }
-
-                // write actions.json
-                FileInfo actionsJsonFileInfo = new FileInfo(Path.Combine(folderToBeCompressed, "actions.json"));
-                var actionsOutputObjectJsonString = JsonConvert.SerializeObject(actionsOutputObject, jsonSerializationOptions);
-                WriteFileToDisk(actionsOutputObjectJsonString, actionsJsonFileInfo);
-
-                // write app.json
-                FileInfo appJsonFileInfo = new FileInfo(Path.Combine(folderToBeCompressed, "app.json"));
-                var appOutputObjectJsonString = JsonConvert.SerializeObject(appOutputObject, jsonSerializationOptions);
-                WriteFileToDisk(appOutputObjectJsonString, appJsonFileInfo);
-
-                // write expressions.json
-                FileInfo expressionsJsonFileInfo = new FileInfo(Path.Combine(folderToBeCompressed, "expressions.json"));
-                var expressionsOutputObjectJsonString = JsonConvert.SerializeObject(expressionsOutputObject, jsonSerializationOptions);
-                WriteFileToDisk(expressionsOutputObjectJsonString, expressionsJsonFileInfo);
-
-                // write stories.json 
-                FileInfo storiesJsonFileInfo = new FileInfo(Path.Combine(folderToBeCompressed, "stories.json"));
-                var storiesOutputObjectJsonString = JsonConvert.SerializeObject(storiesOutputObject, jsonSerializationOptions);
-                WriteFileToDisk(storiesOutputObjectJsonString, storiesJsonFileInfo);
-
-                // write entities folder
-                DirectoryInfo entitiesOutputFolder = new DirectoryInfo(entitiesFolderToBeCompressed);
-                if (!entitiesOutputFolder.Exists) { entitiesOutputFolder.Create(); }
-
-                // write entities
-                for (int i = 0; i < entitiesOutputObjects.Count; i++)
+                // create memory stream for zip archive
+                using (MemoryStream zipMemoryStream = new MemoryStream())
                 {
-                    var entitiesOutputObject = entitiesOutputObjects[i];
-                    FileInfo entityJsonFileInfo = new FileInfo(Path.Combine(entitiesFolderToBeCompressed, string.Format("{0}.json", entitiesOutputObject.Data.Name)));
-                    var entityOutputObjectJsonString = JsonConvert.SerializeObject(entitiesOutputObject, jsonSerializationOptions);
-                    WriteFileToDisk(entityOutputObjectJsonString, entityJsonFileInfo);
+                    using(ZipArchive zipArchive = new ZipArchive(zipMemoryStream, ZipArchiveMode.Create, true))
+                    {
+
+                        // write app.json to zip archive
+                        var appJsonPath = Path.Combine(folderToBeCompressed, "app.json");
+                        var appOutputObjectJsonString = JsonConvert.SerializeObject(appOutputObject, jsonSerializationOptions);
+                        WriteFileToZipArchive(zipArchive, appJsonPath, appOutputObjectJsonString);
+
+                        // write entities
+                        for (int i = 0; i < entitiesOutputObjects.Count; i++)
+                        {
+                            var entitiesOutputObject = entitiesOutputObjects[i];
+                            var entityJsonPath = Path.Combine(entitiesFolderToBeCompressed, string.Format("{0}.json", entitiesOutputObject.Data.Name));
+                            var entityOutputObjectJsonString = JsonConvert.SerializeObject(entitiesOutputObject, jsonSerializationOptions);
+                            WriteFileToZipArchive(zipArchive, entityJsonPath, entityOutputObjectJsonString);
+                        }
+
+                        // write intent file
+                        var intentJsonPath = Path.Combine(entitiesFolderToBeCompressed, "intent.json");
+                        var intentOutputObjectJsonString = JsonConvert.SerializeObject(intentsWOutputObject, jsonSerializationOptions);
+                        WriteFileToZipArchive(zipArchive, intentJsonPath, intentOutputObjectJsonString);
+
+                        // write actions.json to zip archve
+                        var actionsJsonPath = Path.Combine(folderToBeCompressed, "actions.json");
+                        var actionsOutputObjectJsonString = JsonConvert.SerializeObject(actionsOutputObject, jsonSerializationOptions);
+                        WriteFileToZipArchive(zipArchive, actionsJsonPath, actionsOutputObjectJsonString);
+
+                        // write stories.json 
+                        var storiesJsonPath = Path.Combine(folderToBeCompressed, "stories.json");
+                        var storiesOutputObjectJsonString = JsonConvert.SerializeObject(storiesOutputObject, jsonSerializationOptions);
+                        WriteFileToZipArchive(zipArchive, storiesJsonPath, storiesOutputObjectJsonString);
+
+                        // write expressions.json
+                        var expressionsJsonPath = Path.Combine(folderToBeCompressed, "expressions.json");
+                        var expressionsOutputObjectJsonString = JsonConvert.SerializeObject(expressionsOutputObject, jsonSerializationOptions);
+                        WriteFileToZipArchive(zipArchive, expressionsJsonPath, expressionsOutputObjectJsonString);
+                    }
+
+                    // write zip memory stream to disk
+
+                    var zipOutputFileName = modelFolder + ".zip";
+                    FileInfo zipOutput = new FileInfo(zipOutputFileName);
+                    if (zipOutput.Exists) { zipOutput.Delete(); }
+                    using (var zipFileStream = zipOutput.Create())
+                    {
+                        zipMemoryStream.Position = 0;
+                        zipMemoryStream.CopyTo(zipFileStream);
+                    }
+                    
                 }
-
-                // write intent file
-                FileInfo intentJsonFileInfo = new FileInfo(Path.Combine(entitiesFolderToBeCompressed, "intent.json"));
-                var intentOutputObjectJsonString = JsonConvert.SerializeObject(intentsOutputObject, jsonSerializationOptions);
-                WriteFileToDisk(intentOutputObjectJsonString, intentJsonFileInfo);
-
-                // compress
-                var zipOutputFileName = modelFolder + "W.zip";
-                FileInfo zipOutput = new FileInfo(zipOutputFileName);
-                if (zipOutput.Exists) { zipOutput.Delete(); }
-
-                ZipFile.CreateFromDirectory(
-                    folderToBeCompressed, 
-                    zipOutputFileName,
-                    CompressionLevel.Optimal, 
-                    true
-                );
-
             }
             catch (Exception e)
             {
@@ -346,6 +348,15 @@ namespace ModelGeneratorW
 
             jsonFileWritter.Flush();
             jsonFileWritter.Close();
+        }
+
+        private static void WriteFileToZipArchive(ZipArchive zipArchive, string path, string content)
+        {
+            var zipEntry = zipArchive.CreateEntry(path);
+            using (var zipEntryWriter = new StreamWriter(zipEntry.Open()))
+            {
+                zipEntryWriter.WriteLine(content);
+            }
         }
 
         private static void LogCommandLineParameterToConsole(string switchName, object value)
