@@ -109,9 +109,7 @@
     <None Include="model\output\readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\Newtonsoft.Json.dll" />
-    <Content Include="model2\output_sample\entities\hexdump.exe" />
-    <Content Include="model2\output_sample\intents\hexdump.exe" />
+    <Folder Include="Dependencies\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
