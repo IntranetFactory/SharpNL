@@ -2,17 +2,15 @@
 using ModelGeneratorW.Parsers;
 using ModelGeneratorW.Readers;
 using ModelGeneratorW.Tools;
-using ModelGeneratorW.Writers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Reflection;
 using System.IO.Compression;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace ModelGeneratorW
 {
@@ -151,65 +149,105 @@ namespace ModelGeneratorW
             for (int i = 0; i < intentsOutputObjects.Count; i++)
             {
                 var intent = intentsOutputObjects[i];
-                for (int j = 0; j < intent.UserSays.Count; j++)
+
+                if (settings.InlineIds)
                 {
-                    var userSaysData = intent.UserSays[j].Data;
-
-                    for (int k1 = 0; k1 < userSaysData.Count; k1++)
+                    #region process UserSays when inline ids is true
+                    for (int j = 0; j < intent.UserSays.Count; j++)
                     {
-                        var textLine = userSaysData[k1].Text;
+                        var userSaysData = intent.UserSays[j].Data;
 
-                        var containedEntityNames = new List<string>();
+                        for (int k1 = 0; k1 < userSaysData.Count; k1++)
+                        {
+                            var textLine = userSaysData[k1].Text;
+
+                            var containedEntityNames = new List<string>();
+                            var expressionOutputObject = new ExpressionOutputObject();
+
+                            var containedEntities = new List<ExpressionEntityEntryOutputObject>();
+                            containedEntities.Add(new ExpressionEntityEntryOutputObject("intent", string.Format("\"{0}\"", intent.Name)));
+
+                            for (int k = 0; k < entities.Count; k++)
+                            {
+                                var entity = entities[k];
+                                if (textLine.Contains(entity.EntityName))
+                                {
+                                    containedEntityNames.Add(entity.EntityName);
+                                }
+                            }
+
+                            for (int k = 0; k < containedEntityNames.Count; k++)
+                            {
+                                // if intent line contains an entity 
+                                var entityName = containedEntityNames[k];
+
+                                // find value 
+                                var entityOpenTag = string.Format("<{0}>", entityName);
+                                var entityCloseTag = string.Format("</{0}>", entityName);
+                                var openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
+                                while (openTagStartIndex > 0)
+                                {
+                                    var containedEntity = new ExpressionEntityEntryOutputObject(entityName);
+                                    var openTagEndIndex = openTagStartIndex + entityOpenTag.Length;
+                                    var endTagStartIndex = textLine.IndexOf(entityCloseTag, StringComparison.InvariantCultureIgnoreCase);
+                                    containedEntity.Value = textLine.Substring(openTagEndIndex, endTagStartIndex - openTagEndIndex);
+
+                                    // replace entity open tag and entity end tag with empty strings
+                                    textLine = textLine.Remove(endTagStartIndex, entityCloseTag.Length);
+                                    textLine = textLine.Remove(openTagStartIndex, entityOpenTag.Length);
+
+                                    var valueStartIndex = textLine.IndexOf(containedEntity.Value);
+
+                                    containedEntity.Start = valueStartIndex;
+                                    containedEntity.End = valueStartIndex + containedEntity.Value.Length;
+                                    containedEntities.Add(containedEntity);
+                                    containedEntity.Value = string.Format("\"{0}\"", containedEntity.Value);
+
+                                    openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
+                                }
+                            }
+
+                            expressionOutputObject.Text = textLine;
+                            // else if it doesn't contain an entity intent entity is already added
+                            expressionOutputObject.Entities.AddRange(containedEntities);
+                            expressionsOutputObject.Data.Add(expressionOutputObject);
+                        }
+                    }
+                    #endregion
+                }
+                else
+                {
+                    #region process UserSays when inline ids is false
+                    for (int j = 0; j < intent.UserSays.Count; j++)
+                    {
+                        var userSaysData = intent.UserSays[j].Data;
+
                         var expressionOutputObject = new ExpressionOutputObject();
 
                         var containedEntities = new List<ExpressionEntityEntryOutputObject>();
                         containedEntities.Add(new ExpressionEntityEntryOutputObject("intent", string.Format("\"{0}\"", intent.Name)));
+                        var expressionTextBuilder = new StringBuilder();
 
-                        for (int k = 0; k < entities.Count; k++)
+                        for (int k = 0; k < userSaysData.Count; k++)
                         {
-                            var entity = entities[k];
-                            if (textLine.Contains(entity.EntityName))
+                            var data = userSaysData[k];
+
+                            if (!string.IsNullOrEmpty(data.Alias))
                             {
-                                containedEntityNames.Add(entity.EntityName);
+                                ExpressionEntityEntryOutputObject entity = new ExpressionEntityEntryOutputObject(data.Alias, data.Text);
+                                entity.Start = expressionTextBuilder.Length;
+                                entity.End = entity.Start + data.Text.Length;
+                                containedEntities.Add(entity);
                             }
+
+                            expressionTextBuilder.Append(data.Text);
                         }
 
-                        for (int k = 0; k < containedEntityNames.Count; k++)
-                        {
-                            // if intent line contains an entity 
-                            var entityName = containedEntityNames[k];
-
-                            // find value 
-                            var entityOpenTag = string.Format("<{0}>", entityName);
-                            var entityCloseTag = string.Format("</{0}>", entityName);
-                            var openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
-                            while (openTagStartIndex > 0)
-                            {
-                                var containedEntity = new ExpressionEntityEntryOutputObject(entityName);
-                                var openTagEndIndex = openTagStartIndex + entityOpenTag.Length;
-                                var endTagStartIndex = textLine.IndexOf(entityCloseTag, StringComparison.InvariantCultureIgnoreCase);
-                                containedEntity.Value = textLine.Substring(openTagEndIndex, endTagStartIndex - openTagEndIndex);
-
-                                // replace entity open tag and entity end tag with empty strings
-                                textLine = textLine.Remove(endTagStartIndex, entityCloseTag.Length);
-                                textLine = textLine.Remove(openTagStartIndex, entityOpenTag.Length);
-
-                                var valueStartIndex = textLine.IndexOf(containedEntity.Value);
-
-                                containedEntity.Start = valueStartIndex;
-                                containedEntity.End = valueStartIndex + containedEntity.Value.Length;
-                                containedEntities.Add(containedEntity);
-                                containedEntity.Value = string.Format("\"{0}\"", containedEntity.Value);
-
-                                openTagStartIndex = textLine.IndexOf(entityOpenTag, StringComparison.InvariantCultureIgnoreCase);
-                            }
-                        }
-
-                        expressionOutputObject.Text = textLine;
-                        // else if it doesn't contain an entity intent entity is already added
+                        expressionOutputObject.Text = expressionTextBuilder.ToString();
                         expressionOutputObject.Entities.AddRange(containedEntities);
                         expressionsOutputObject.Data.Add(expressionOutputObject);
                     }
+                    #endregion
                 }
             }
 
@@ -335,19 +373,8 @@ namespace ModelGeneratorW
                 Console.WriteLine(e.Message);
             }
 
-
             Console.WriteLine("Finished. Press ENTER to exit");
             Console.ReadLine();
-        }
-
-        private static void WriteFileToDisk(string dataToWrite, FileInfo fileToWriteInto)
-        {
-            var jsonFileWritter = fileToWriteInto.CreateText();
-
-            jsonFileWritter.WriteLine(dataToWrite);
-
-            jsonFileWritter.Flush();
-            jsonFileWritter.Close();
         }
 
         private static void WriteFileToZipArchive(ZipArchive zipArchive, string path, string content)
