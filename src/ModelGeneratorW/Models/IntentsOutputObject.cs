@@ -130,7 +130,7 @@ namespace ModelGeneratorW.Models
 
         public IntentsDataOutputObjectW()
         {
-            Lookups = new List<string>() { "keywords", "free-text" };
+            Lookups = new List<string>() { "trait" };
             Name = "intent";
             Lang = "en";
             Exotic = false;
