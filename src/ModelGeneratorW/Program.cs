@@ -114,7 +114,7 @@ namespace ModelGeneratorW
             var folderToBeCompressed = modelFolder;
 
             // create relative paht for the entities folder under folder to be compressed
-            var entitiesFolderToBeCompressed = Path.Combine(folderToBeCompressed, "entities");
+            var entitiesFolderToBeCompressed = String.Join("/", folderToBeCompressed, "entities");
 
             // prepare the AppOutputObject
             var appOutputObject = new AppOutputObject();
@@ -234,7 +234,7 @@ namespace ModelGeneratorW
 
                             if (!string.IsNullOrEmpty(data.Alias))
                             {
-                                ExpressionEntityEntryOutputObject entity = new ExpressionEntityEntryOutputObject(data.Alias, data.Text);
+                                ExpressionEntityEntryOutputObject entity = new ExpressionEntityEntryOutputObject(data.Alias, string.Format("\"{0}\"", data.Text));
                                 entity.Start = expressionTextBuilder.Length;
                                 entity.End = entity.Start + data.Text.Length;
                                 containedEntities.Add(entity);
@@ -321,7 +321,7 @@ namespace ModelGeneratorW
                     {
 
                         // write app.json to zip archive
-                        var appJsonPath = Path.Combine(folderToBeCompressed, "app.json");
+                        var appJsonPath = String.Join("/", folderToBeCompressed, "app.json");
                         var appOutputObjectJsonString = JsonConvert.SerializeObject(appOutputObject, jsonSerializationOptions);
                         WriteFileToZipArchive(zipArchive, appJsonPath, appOutputObjectJsonString);
 
@@ -329,28 +329,28 @@ namespace ModelGeneratorW
                         for (int i = 0; i < entitiesOutputObjects.Count; i++)
                         {
                             var entitiesOutputObject = entitiesOutputObjects[i];
-                            var entityJsonPath = Path.Combine(entitiesFolderToBeCompressed, string.Format("{0}.json", entitiesOutputObject.Data.Name));
+                            var entityJsonPath = String.Join("/", entitiesFolderToBeCompressed, string.Format("{0}.json", entitiesOutputObject.Data.Name));
                             var entityOutputObjectJsonString = JsonConvert.SerializeObject(entitiesOutputObject, jsonSerializationOptions);
                             WriteFileToZipArchive(zipArchive, entityJsonPath, entityOutputObjectJsonString);
                         }
 
                         // write intent file
-                        var intentJsonPath = Path.Combine(entitiesFolderToBeCompressed, "intent.json");
+                        var intentJsonPath = String.Join("/", entitiesFolderToBeCompressed, "intent.json");
                         var intentOutputObjectJsonString = JsonConvert.SerializeObject(intentsWOutputObject, jsonSerializationOptions);
                         WriteFileToZipArchive(zipArchive, intentJsonPath, intentOutputObjectJsonString);
 
                         // write actions.json to zip archve
-                        var actionsJsonPath = Path.Combine(folderToBeCompressed, "actions.json");
+                        var actionsJsonPath = String.Join("/", folderToBeCompressed, "actions.json");
                         var actionsOutputObjectJsonString = JsonConvert.SerializeObject(actionsOutputObject, jsonSerializationOptions);
                         WriteFileToZipArchive(zipArchive, actionsJsonPath, actionsOutputObjectJsonString);
 
                         // write stories.json 
-                        var storiesJsonPath = Path.Combine(folderToBeCompressed, "stories.json");
+                        var storiesJsonPath = String.Join("/", folderToBeCompressed, "stories.json");
                         var storiesOutputObjectJsonString = JsonConvert.SerializeObject(storiesOutputObject, jsonSerializationOptions);
                         WriteFileToZipArchive(zipArchive, storiesJsonPath, storiesOutputObjectJsonString);
 
                         // write expressions.json
-                        var expressionsJsonPath = Path.Combine(folderToBeCompressed, "expressions.json");
+                        var expressionsJsonPath = String.Join("/", folderToBeCompressed, "expressions.json");
                         var expressionsOutputObjectJsonString = JsonConvert.SerializeObject(expressionsOutputObject, jsonSerializationOptions);
                         WriteFileToZipArchive(zipArchive, expressionsJsonPath, expressionsOutputObjectJsonString);
                     }
