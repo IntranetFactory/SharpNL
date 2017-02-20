@@ -19,7 +19,25 @@ namespace ModelGenerator.Models
 
     sealed class UserSayData
     {
-        public string Text { get; set; }
+        private string _text;
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
+            set
+            {
+                _text = value;
+
+                // remove trailing ? or ! from intent
+                if (_text.EndsWith("?") || _text.EndsWith("!"))
+                {
+                    _text = _text.Substring(0, _text.Length - 1);
+                }
+            }
+        }
+
         public string Alias { get; set; }
         public string Meta { get; set; }
         public bool? UserDefined { get; set; }
